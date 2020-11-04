@@ -1,5 +1,5 @@
 <template>
-  <main class="p-10 pt-16">
+  <main class="p-10">
     <h1>Kaarten</h1>
     <p>Lijst met beschikbare kaarten</p>
   </main>

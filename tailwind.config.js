@@ -19,6 +19,9 @@ module.exports = {
           "blue-dark": "#214962",
         },
       },
+      minHeight: {
+        "50vh": "50vh",
+      },
     },
   },
   variants: {},
