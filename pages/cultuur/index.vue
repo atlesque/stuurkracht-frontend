@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="p-10 pt-16">
     <h1>Cultuur</h1>
     <p>
       Verlies is eigen aan het leven en heeft veel betekenissen zoals verlies

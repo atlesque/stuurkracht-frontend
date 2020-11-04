@@ -1,0 +1,79 @@
+// Add custom font-faces here:
+@import "../fonts/lato.less";
+
+html {
+  // Responsive typography
+  // Source: https://www.smashingmagazine.com/2016/05/fluid-typography/
+  // font-size: calc(14px + (24 - 14) * (100vw - 320px) / (8192 - 320));
+
+  // font-size: calc(16px + (24 - 12) * (100vw - 400px) / (800 - 400));
+
+  /* @screen sm {
+    font-size: calc(16px + (24 - 16) * (100vw - 400px) / (4096 - 400));
+  } */
+
+  /* font-size: calc(16px + (24 - 12) * (100vw - 400px) / (800 - 400));
+
+  @screen sm {
+    font-size: 18px;
+  } */
+
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  @screen sm {
+    font-size: 18px;
+  }
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  @apply text-theme-black;
+
+  h1 {
+    @apply text-2xl;
+    @apply mt-4;
+    @apply mb-2;
+  }
+
+  h2 {
+    @apply text-xl;
+    @apply mt-4;
+    @apply mb-2;
+  }
+
+  h3 {
+    @apply text-lg;
+  }
+
+  h4 {
+    @apply font-bold;
+  }
+
+  p {
+    @apply mb-4;
+    @apply text-base;
+  }
+
+  textarea {
+    max-width: 100%;
+  }
+}
+
+.headline,
+.headline-xl {
+  @apply font-normal;
+}
+
+.headline-xl {
+  @apply text-5xl;
+}
+
+.headline {
+  @apply text-4xl;
+}
+
+.caption {
+  @apply text-sm;
+}
