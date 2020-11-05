@@ -13,185 +13,220 @@
           {{ card.copyright }}
         </figcaption>
       </figure>
-      <form
-        v-show="isPreviewVisible === false"
-        class="flex-1 md:pl-10"
-        @submit.prevent="handleSubmitForm"
+      <template
+        v-if="isSendingMessage === false && isSuccessMessageVisible === false"
       >
-        <div class="flex flex-col-reverse justify-between lg:flex-row">
-          <h1 class="mt-0 uppercase">Vul je gegevens in</h1>
-          <NuxtLink to="/kaarten" class="self-start link-primary"
-            >Terug naar overzicht</NuxtLink
-          >
-        </div>
-        <div class="grid grid-cols-1 gap-4 mb-10 lg:grid-cols-2 lg:gap-10">
-          <div
-            class="flex flex-col"
-            :class="{ 'form-group--error': $v.message.senderName.$error }"
-          >
-            <label for="senderName" class="label"
-              >Jouw naam <span class="text-red-500">*</span></label
-            >
-            <input
-              id="senderName"
-              v-model.trim="$v.message.senderName.$model"
-              type="text"
-              class="input"
-              name="senderName"
-              maxlength="100"
-            />
-            <span v-if="!$v.message.senderName.required" class="form-error"
-              >Dit veld is vereist</span
-            >
-            <span v-if="!$v.message.senderName.maxLength" class="form-error"
-              >Max. {{ $v.message.senderName.$params.maxLength.max }} karakters
-            </span>
-          </div>
-          <div
-            class="flex flex-col"
-            :class="{ 'form-group--error': $v.message.senderEmail.$error }"
-          >
-            <label for="senderEmail" class="label"
-              >Jouw e-mailadres <span class="text-red-500">*</span></label
-            >
-            <input
-              id="senderEmail"
-              v-model.trim="$v.message.senderEmail.$model"
-              type="text"
-              class="input"
-              name="senderEmail"
-              maxlength="320"
-            />
-            <span v-if="!$v.message.senderEmail.required" class="form-error"
-              >Dit veld is vereist</span
-            >
-            <span v-if="!$v.message.senderEmail.maxLength" class="form-error"
-              >Max. {{ $v.message.senderEmail.$params.maxLength.max }} karakters
-            </span>
-            <span v-if="!$v.message.senderEmail.email" class="form-error"
-              >Voer een geldig emailadres in
-            </span>
-          </div>
-          <div
-            class="flex flex-col"
-            :class="{ 'form-group--error': $v.message.recipientName.$error }"
-          >
-            <label for="recipientName" class="label"
-              >Naam bestemmeling <span class="text-red-500">*</span></label
-            >
-            <input
-              id="recipientName"
-              v-model.trim="$v.message.recipientName.$model"
-              type="text"
-              class="input"
-              name="recipientName"
-              maxlength="100"
-            />
-            <span v-if="!$v.message.recipientName.required" class="form-error"
-              >Dit veld is vereist</span
-            >
-            <span v-if="!$v.message.recipientName.maxLength" class="form-error"
-              >Max.
-              {{ $v.message.recipientName.$params.maxLength.max }} karakters
-            </span>
-          </div>
-          <div
-            class="flex flex-col"
-            :class="{ 'form-group--error': $v.message.recipientEmail.$error }"
-          >
-            <label for="recipientEmail" class="label"
-              >E-mailadres bestemmeling
-              <span class="text-red-500">*</span></label
-            >
-            <input
-              id="recipientEmail"
-              v-model.trim="$v.message.recipientEmail.$model"
-              type="text"
-              class="input"
-              name="recipientEmail"
-              maxlength="320"
-            />
-            <span v-if="!$v.message.recipientEmail.required" class="form-error"
-              >Dit veld is vereist</span
-            >
-            <span v-if="!$v.message.recipientEmail.maxLength" class="form-error"
-              >Max.
-              {{ $v.message.recipientEmail.$params.maxLength.max }} karakters
-            </span>
-            <span v-if="!$v.message.recipientEmail.email" class="form-error"
-              >Voer een geldig emailadres in
-            </span>
-          </div>
-          <div
-            class="flex flex-col col-span-2"
-            :class="{ 'form-group--error': $v.message.body.$error }"
-          >
-            <label for="body" class="label">Boodschap</label>
-            <AutoSizingTextarea>
-              <textarea
-                id="body"
-                v-model.trim="$v.message.body.$model"
-                type="text"
-                class="font-handwritten input"
-                name="body"
-                maxlength="2000"
-                rows="5"
-              />
-            </AutoSizingTextarea>
-            <span
-              v-if="message.body.length > 1900"
-              class="font-bold"
-              :class="[{ 'text-red-500': message.body.length >= 2000 }]"
-              >{{ message.body.length }}/2000</span
-            >
-            <span v-if="!$v.message.body.maxLength" class="form-error"
-              >Max. {{ $v.message.body.$params.maxLength.max }} karakters
-            </span>
-          </div>
-        </div>
-        <div class="flex justify-between">
-          <button type="submit" class="button-primary">Stuur deze kaart</button>
-          <button
-            class="button-primary-outline"
-            @click.prevent="handleShowPreview"
-          >
-            Bekijk een voorbeeld
-          </button>
-        </div>
-      </form>
-      <div
-        v-show="isPreviewVisible === true"
-        class="flex flex-col justify-between flex-1 md:pl-10"
-      >
-        <span class="mt-0 font-bold uppercase text text-theme-blue-light">
-          Zo zal jouw boodschap eruit zien:
-        </span>
-        <h1 class="mt-0">
-          <span> {{ message.senderName }} heeft je kracht gestuurd</span>
-        </h1>
-        <pre
-          v-if="message.body.length > 0"
-          class="p-10 mb-10 shadow-md bg-theme-letter font-handwritten"
-          >{{ message.body }}</pre
+        <form
+          v-show="isPreviewVisible === false"
+          class="flex-1 md:pl-10"
+          @submit.prevent="handleSubmitForm"
         >
-        <div class="flex justify-between">
-          <button class="button-primary" @click="handleSubmitForm">
-            Stuur deze kaart
-          </button>
-          <button
-            class="button-primary-outline"
-            @click.prevent="isPreviewVisible = false"
+          <div class="flex flex-col-reverse justify-between lg:flex-row">
+            <h1 class="mt-0 uppercase">Vul je gegevens in</h1>
+            <NuxtLink to="/kaarten" class="self-start link-primary"
+              >Terug naar overzicht</NuxtLink
+            >
+          </div>
+          <div class="grid grid-cols-1 gap-4 mb-10 lg:grid-cols-2 lg:gap-10">
+            <div
+              class="flex flex-col"
+              :class="{ 'form-group--error': $v.message.senderName.$error }"
+            >
+              <label for="senderName" class="label"
+                >Jouw naam <span class="text-red-500">*</span></label
+              >
+              <input
+                id="senderName"
+                v-model.trim="$v.message.senderName.$model"
+                type="text"
+                class="input"
+                name="senderName"
+                maxlength="100"
+              />
+              <span v-if="!$v.message.senderName.required" class="form-error"
+                >Dit veld is vereist</span
+              >
+              <span v-if="!$v.message.senderName.maxLength" class="form-error"
+                >Max.
+                {{ $v.message.senderName.$params.maxLength.max }} karakters
+              </span>
+            </div>
+            <div
+              class="flex flex-col"
+              :class="{ 'form-group--error': $v.message.senderEmail.$error }"
+            >
+              <label for="senderEmail" class="label"
+                >Jouw e-mailadres <span class="text-red-500">*</span></label
+              >
+              <input
+                id="senderEmail"
+                v-model.trim="$v.message.senderEmail.$model"
+                type="text"
+                class="input"
+                name="senderEmail"
+                maxlength="320"
+              />
+              <span v-if="!$v.message.senderEmail.required" class="form-error"
+                >Dit veld is vereist</span
+              >
+              <span v-if="!$v.message.senderEmail.maxLength" class="form-error"
+                >Max.
+                {{ $v.message.senderEmail.$params.maxLength.max }} karakters
+              </span>
+              <span v-if="!$v.message.senderEmail.email" class="form-error"
+                >Voer een geldig emailadres in
+              </span>
+            </div>
+            <div
+              class="flex flex-col"
+              :class="{ 'form-group--error': $v.message.recipientName.$error }"
+            >
+              <label for="recipientName" class="label"
+                >Naam bestemmeling <span class="text-red-500">*</span></label
+              >
+              <input
+                id="recipientName"
+                v-model.trim="$v.message.recipientName.$model"
+                type="text"
+                class="input"
+                name="recipientName"
+                maxlength="100"
+              />
+              <span v-if="!$v.message.recipientName.required" class="form-error"
+                >Dit veld is vereist</span
+              >
+              <span
+                v-if="!$v.message.recipientName.maxLength"
+                class="form-error"
+                >Max.
+                {{ $v.message.recipientName.$params.maxLength.max }} karakters
+              </span>
+            </div>
+            <div
+              class="flex flex-col"
+              :class="{ 'form-group--error': $v.message.recipientEmail.$error }"
+            >
+              <label for="recipientEmail" class="label"
+                >E-mailadres bestemmeling
+                <span class="text-red-500">*</span></label
+              >
+              <input
+                id="recipientEmail"
+                v-model.trim="$v.message.recipientEmail.$model"
+                type="text"
+                class="input"
+                name="recipientEmail"
+                maxlength="320"
+              />
+              <span
+                v-if="!$v.message.recipientEmail.required"
+                class="form-error"
+                >Dit veld is vereist</span
+              >
+              <span
+                v-if="!$v.message.recipientEmail.maxLength"
+                class="form-error"
+                >Max.
+                {{ $v.message.recipientEmail.$params.maxLength.max }} karakters
+              </span>
+              <span v-if="!$v.message.recipientEmail.email" class="form-error"
+                >Voer een geldig emailadres in
+              </span>
+            </div>
+            <div
+              class="flex flex-col col-span-2"
+              :class="{ 'form-group--error': $v.message.body.$error }"
+            >
+              <label for="body" class="label">Boodschap</label>
+              <AutoSizingTextarea>
+                <textarea
+                  id="body"
+                  v-model.trim="$v.message.body.$model"
+                  type="text"
+                  class="font-handwritten input"
+                  name="body"
+                  maxlength="2000"
+                  rows="5"
+                />
+              </AutoSizingTextarea>
+              <span
+                v-if="message.body.length > 1900"
+                class="font-bold"
+                :class="[{ 'text-red-500': message.body.length >= 2000 }]"
+                >{{ message.body.length }}/2000</span
+              >
+              <span v-if="!$v.message.body.maxLength" class="form-error"
+                >Max. {{ $v.message.body.$params.maxLength.max }} karakters
+              </span>
+            </div>
+          </div>
+          <div class="flex justify-between">
+            <button type="submit" class="button-primary">
+              Stuur deze kaart
+            </button>
+            <button
+              class="button-primary-outline"
+              @click.prevent="handleShowPreview"
+            >
+              Bekijk een voorbeeld
+            </button>
+          </div>
+        </form>
+        <div
+          v-show="isPreviewVisible === true"
+          class="flex flex-col justify-between flex-1 md:pl-10"
+        >
+          <span class="mt-0 font-bold uppercase text text-theme-blue-light">
+            Zo zal jouw boodschap eruit zien:
+          </span>
+          <h1 class="mt-0">
+            <span> {{ message.senderName }} heeft je kracht gestuurd</span>
+          </h1>
+          <pre
+            v-if="message.body.length > 0"
+            class="p-10 mb-10 shadow-md bg-theme-letter font-handwritten"
+            >{{ message.body }}</pre
           >
-            Terug naar bewerken
-          </button>
+          <div class="flex justify-between">
+            <button class="button-primary" @click="handleSubmitForm">
+              Stuur deze kaart
+            </button>
+            <button
+              class="button-primary-outline"
+              @click.prevent="isPreviewVisible = false"
+            >
+              Terug naar bewerken
+            </button>
+          </div>
         </div>
-      </div>
+      </template>
+      <template
+        v-if="isSendingMessage === true && isSuccessMessageVisible === false"
+      >
+        <div class="flex items-center justify-center flex-1 md:pl-10">
+          <span class="p-10 text-xl text-theme-gray"
+            >Een ogenblik alsjeblieft, je kaart wordt verstuurd...</span
+          >
+        </div>
+      </template>
+      <template
+        v-if="isSendingMessage === false && isSuccessMessageVisible === true"
+      >
+        <div class="flex items-center justify-center flex-1 md:pl-10">
+          <span class="p-10 text-xl text-green-500">Bericht verstuurd!</span>
+        </div>
+      </template>
     </div>
+    <span
+      v-show="isSendingMessage === false && error != null"
+      class="block p-4 mt-4 text-xl text-white bg-red-800"
+      >{{ error }}</span
+    >
   </main>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import { required, maxLength, email } from "vuelidate/lib/validators";
 import AutoSizingTextarea from "@/components/AutoSizingTextarea.vue";
 
@@ -209,28 +244,32 @@ export default {
       card: null,
       isLoadingCardDetails: false,
       isPreviewVisible: false,
+      isSuccessMessageVisible: false,
       message: {
         senderName: "Alex",
         senderEmail: "alexander@atlesque.com",
         recipientName: "Inge",
-        recipientEmail: "inge.van.meenen@hotmail.com",
+        recipientEmail: "inge.van.meenen@mailinator.com",
         body: "",
       },
     };
   },
   computed: {
+    ...mapState("messages", ["isSendingMessage", "error"]),
     cardId() {
       return this.$route.params.id;
     },
   },
   methods: {
     ...mapActions("cards", ["getCardById"]),
-    handleSubmitForm() {
+    ...mapActions("messages", ["sendMessage"]),
+    async handleSubmitForm() {
       this.$v.$touch();
-      if (this.$v.$invalid) {
-        console.log("ERROR: form is not valid!");
-      } else {
-        console.log("form valid!");
+      if (this.$v.$invalid === false) {
+        await this.sendMessage({ ...this.message, cardId: this.cardId });
+        if (this.isSendingMessage === false && this.error == null) {
+          this.isSuccessMessageVisible = true;
+        }
       }
     },
     handleShowPreview() {
