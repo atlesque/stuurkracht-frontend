@@ -10,8 +10,18 @@
       >Stuurkracht</NuxtLink
     >
     <div class="items-center hidden md:flex">
-      <NuxtLink to="/kaarten" class="nav-link">Kaarten</NuxtLink>
-      <NuxtLink to="/cultuur" class="nav-link">Cultuur</NuxtLink>
+      <NuxtLink
+        to="/kaarten"
+        class="nav-link"
+        :class="[{ 'nav-link--active': isLinkActive('/kaarten') }]"
+        >Kaarten</NuxtLink
+      >
+      <NuxtLink
+        to="/cultuur"
+        class="nav-link"
+        :class="[{ 'nav-link--active': isLinkActive('/cultuur') }]"
+        >Cultuur</NuxtLink
+      >
     </div>
     <button
       class="flex items-center mobile-menu-toggle md:hidden"
@@ -113,6 +123,9 @@ export default {
       this.isMobileMenuVisible = false;
       this.$router.push(linkUrl);
     },
+    isLinkActive(link) {
+      return this.$route.path === link;
+    },
   },
 };
 </script>
@@ -156,6 +169,10 @@ nav {
   @apply uppercase;
   @apply font-bold;
   @apply py-3;
+}
+
+.nav-link--active {
+  @apply text-theme-blue;
 }
 
 .mobile-menu {
