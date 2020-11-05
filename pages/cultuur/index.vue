@@ -17,9 +17,7 @@
         eigen veer- en stuurkracht van mensen. Een cultuur waar elke persoon
         zijn of haar uniek rouwtraject kan bewandelen en beleven.
       </p>
-      <NuxtLink to="/kaarten" class="uppercase button-primary"
-        >Stuur een kaart</NuxtLink
-      >
+      <NuxtLink to="/kaarten" class="button-primary">Stuur een kaart</NuxtLink>
     </div>
   </main>
 </template>

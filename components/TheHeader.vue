@@ -1,7 +1,7 @@
 <template>
   <nav
     ref="navMenu"
-    class="fixed flex justify-between w-full px-10 py-6 transition-all duration-500 md:justify-start"
+    class="fixed z-40 flex justify-between w-full px-10 py-6 transition-all duration-500 md:justify-start"
     :class="[
       { 'is-dark': isPageTransparent === false || isAtPageTop === false },
     ]"

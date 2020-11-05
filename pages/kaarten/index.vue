@@ -1,7 +1,16 @@
 <template>
   <main class="p-10">
-    <span v-show="availableCards.length <= 0" class="text-xl text-theme-gray">
+    <span
+      v-show="availableCards.length <= 0 && this.isLoadingCards === false"
+      class="text-xl text-theme-gray"
+    >
       Er zijn nog geen kaarten aangemaakt.
+    </span>
+    <span
+      v-show="availableCards.length <= 0 && this.isLoadingCards === true"
+      class="text-xl text-theme-gray"
+    >
+      Kaarten worden geladen...
     </span>
     <span v-if="error != null && error.length > 0" class="text-xl text-red-900">
       Fout: {{ error }}
@@ -12,7 +21,7 @@
       <li
         v-for="card in availableCards"
         :key="card.id"
-        class="relative overflow-hidden card"
+        class="relative overflow-hidden transition-all duration-200 card"
       >
         <NuxtLink :to="`/kaart/${card.id}`">
           <img
@@ -29,6 +38,10 @@
 <style lang="less" scoped>
 .card {
   padding-top: 100%;
+
+  &:hover {
+    @apply shadow-lg;
+  }
 }
 </style>
 
@@ -37,8 +50,12 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   async fetch() {
-    // Only get cards on server
-    if (process.server) {
+    // Only get cards on server or when none are available
+    if (
+      process.server ||
+      this.availableCards == null ||
+      this.availableCards.length <= 0
+    ) {
       await this.getAvailableCards();
     }
   },

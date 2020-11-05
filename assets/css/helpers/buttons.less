@@ -10,6 +10,7 @@
   @apply transition-all;
   @apply duration-100;
   @apply text-sm;
+  @apply uppercase;
 
   &:disabled {
     opacity: 0.5;
@@ -42,5 +43,18 @@
   &:active:not(:disabled) {
     box-shadow: 0 0 0 theme("width.1") theme("colors.theme.blue-dark");
     @apply bg-theme-blue-dark;
+  }
+}
+
+.button-primary-outline {
+  .button-primary();
+
+  @apply bg-transparent;
+  @apply text-theme-blue;
+  @apply border-2;
+  @apply border-theme-blue;
+
+  &:active {
+    @apply text-white;
   }
 }

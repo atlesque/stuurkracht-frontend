@@ -51,4 +51,14 @@ export const actions = {
     }
     return availableCards;
   },
+  async getCardById({ commit }, id) {
+    let cardDetails;
+    try {
+      const response = await cardsApi.getCardById(id);
+      cardDetails = response.data;
+    } catch (err) {
+      console.error(err);
+    }
+    return cardDetails;
+  },
 };

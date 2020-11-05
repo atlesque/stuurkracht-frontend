@@ -7,7 +7,7 @@
           te geven in verbondenheid. In het bijzonder aan personen die met
           verlies omgaan.
         </p>
-        <NuxtLink to="/kaarten" class="uppercase button-primary"
+        <NuxtLink to="/kaarten" class="button-primary"
           >Stuur een kaartje</NuxtLink
         >
       </div>
@@ -30,7 +30,7 @@
             Het is een uitnodiging om verlies bespreekbaar te maken met
             mildheid.
           </p>
-          <NuxtLink to="/cultuur" class="uppercase button-primary"
+          <NuxtLink to="/cultuur" class="button-primary"
             >Ontdek de cultuur</NuxtLink
           >
         </div>

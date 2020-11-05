@@ -9,7 +9,6 @@ module.exports = {
     extend: {
       colors: {
         theme: {
-          primary: "#60C2E4",
           black: "#515151",
           "gray-light": "#CED1D7",
           gray: "#9CA3AE",
@@ -17,10 +16,14 @@ module.exports = {
           "blue-light": "#A0C8E2",
           blue: "#4191C4",
           "blue-dark": "#214962",
+          letter: "#FFFAED",
         },
       },
       minHeight: {
         "50vh": "50vh",
+      },
+      fontFamily: {
+        handwritten: ["Kalam", "serif"],
       },
     },
   },
