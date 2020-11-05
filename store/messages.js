@@ -3,12 +3,16 @@ import messagesApi from "@/api/messages";
 const types = {
   START_SENDING_MESSAGE: "⏱ [Start] loading messages",
   STOP_SENDING_MESSAGE: "⏱ [Stop] loading messages",
+  SET_LAST_SENT_MESSAGE: "✅ Set last sent message",
   SET_ERROR: "⚠ Set error",
   CLEAR_ERROR: "✨ Cleared error",
 };
 export const state = () => ({
   isSendingMessage: false,
   error: null,
+  lastSentMessage: {
+    uuid: "test",
+  },
 });
 
 export const mutations = {
@@ -17,6 +21,9 @@ export const mutations = {
   },
   [types.STOP_SENDING_MESSAGE](state) {
     state.isSendingMessage = false;
+  },
+  [types.SET_LAST_SENT_MESSAGE](state, message) {
+    state.lastSentMessage = message;
   },
   [types.SET_ERROR](state, error) {
     state.error = error;
@@ -44,6 +51,7 @@ export const actions = {
         body,
       });
       sentMessage = response.data;
+      commit(types.SET_LAST_SENT_MESSAGE, sentMessage);
     } catch (err) {
       console.error(err);
       commit(
