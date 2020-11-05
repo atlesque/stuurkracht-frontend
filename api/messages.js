@@ -20,4 +20,8 @@ export default {
     });
     return response;
   },
+  async getMessageById(id) {
+    const response = await HTTP.get(`${API.messages.root}/${id}`);
+    return response;
+  },
 };

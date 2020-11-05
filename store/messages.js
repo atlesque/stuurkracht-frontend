@@ -10,9 +10,7 @@ const types = {
 export const state = () => ({
   isSendingMessage: false,
   error: null,
-  lastSentMessage: {
-    uuid: "test",
-  },
+  lastSentMessage: null,
 });
 
 export const mutations = {
@@ -62,5 +60,20 @@ export const actions = {
       commit(types.STOP_SENDING_MESSAGE);
     }
     return sentMessage;
+  },
+  async getMessageById({ commit }, id) {
+    commit(types.CLEAR_ERROR);
+    let messageDetails;
+    try {
+      const response = await messagesApi.getMessageById(id);
+      messageDetails = response.data;
+    } catch (err) {
+      console.error(err);
+      commit(
+        types.SET_ERROR,
+        "Fout bij laden van de kaart. Probeer het later opnieuw."
+      );
+    }
+    return messageDetails;
   },
 };

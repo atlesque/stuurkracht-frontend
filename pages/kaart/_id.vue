@@ -268,7 +268,8 @@ export default {
       if (this.$v.$invalid === false) {
         await this.sendMessage({ ...this.message, cardId: this.cardId });
         if (this.isSendingMessage === false && this.error == null) {
-          this.isSuccessMessageVisible = true;
+          // this.isSuccessMessageVisible = true;
+          this.$router.push("/kaart-verstuurd");
         }
       }
     },
