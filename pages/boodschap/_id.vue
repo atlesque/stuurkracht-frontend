@@ -6,8 +6,8 @@
       >Kaart wordt geladen...</span
     >
     <div
-      class="flex flex-col md:flex-row"
       v-if="message != null && isLoadingMessageDetails === false"
+      class="flex flex-col md:flex-row"
     >
       <figure class="flex-1 pb-4 md:pb-0">
         <img :src="message.card.picture" :alt="message.card.name" />
@@ -26,8 +26,8 @@
         >
         <div>
           <span
-            >Met Stuurkracht stuur je digitale kaarten sturen naar mensen die je
-            kracht wilt toewensen.&nbsp;
+            >Met Stuurkracht stuur je digitale kaarten naar mensen die je kracht
+            wilt toewensen.&nbsp;
           </span>
           <NuxtLink to="/kaarten" class="link-primary"
             >Stuur zelf een kaart</NuxtLink
