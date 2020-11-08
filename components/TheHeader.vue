@@ -1,7 +1,7 @@
 <template>
   <nav
     ref="navMenu"
-    class="fixed z-40 flex justify-between w-full px-10 py-6 transition-all duration-500 md:justify-start"
+    class="fixed z-40 flex items-center justify-between w-full px-10 py-6 transition-all duration-500 md:justify-start"
     :class="[
       { 'is-dark': isPageTransparent === false || isAtPageTop === false },
     ]"
@@ -9,19 +9,29 @@
     <NuxtLink to="/" class="pr-4 text-2xl font-bold uppercase logo"
       >Stuurkracht</NuxtLink
     >
-    <div class="items-center hidden md:flex">
-      <NuxtLink
-        to="/kaarten"
-        class="nav-link"
-        :class="[{ 'nav-link--active': isLinkActive('/kaarten') }]"
-        >Kaarten</NuxtLink
-      >
-      <NuxtLink
-        to="/cultuur"
-        class="nav-link"
-        :class="[{ 'nav-link--active': isLinkActive('/cultuur') }]"
-        >Cultuur</NuxtLink
-      >
+    <div class="items-center justify-between flex-1 hidden md:flex">
+      <div>
+        <NuxtLink
+          to="/kaarten"
+          class="nav-link"
+          :class="[{ 'nav-link--active': isLinkActive('/kaarten') }]"
+          >Kaarten</NuxtLink
+        >
+        <NuxtLink
+          to="/cultuur"
+          class="nav-link"
+          :class="[{ 'nav-link--active': isLinkActive('/cultuur') }]"
+          >Cultuur</NuxtLink
+        >
+      </div>
+      <client-only>
+        <NuxtLink
+          v-if="isLoggedIn === true && isLinkActive('/kaarten') === true"
+          to="/kaart-toevoegen"
+          class="nav-link button-primary"
+          >Kaart toevoegen</NuxtLink
+        >
+      </client-only>
     </div>
     <button
       class="flex items-center mobile-menu-toggle md:hidden"
@@ -81,12 +91,23 @@
         >
           Cultuur
         </button>
+        <client-only>
+          <button
+            v-if="isLoggedIn === true && isLinkActive('/kaarten') === true"
+            class="self-start mt-4 nav-link--mobile button-primary"
+            @click="handleMobileLinkClick('/kaart-toevoegen')"
+          >
+            Kaart toevoegen
+          </button>
+        </client-only>
       </div>
     </div>
   </nav>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -95,6 +116,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("auth", ["isLoggedIn"]),
     isPageTransparent() {
       return ["/"].includes(this.$route.path);
     },

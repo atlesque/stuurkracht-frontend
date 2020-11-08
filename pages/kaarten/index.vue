@@ -1,7 +1,9 @@
 <template>
   <main class="p-10">
     <span
-      v-show="availableCards.length <= 0 && isLoadingCards === false"
+      v-show="
+        availableCards.length <= 0 && isLoadingCards === false && error == null
+      "
       class="text-xl text-theme-gray"
     >
       Er zijn nog geen kaarten aangemaakt.
