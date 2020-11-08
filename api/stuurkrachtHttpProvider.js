@@ -1,13 +1,12 @@
 import axios from "axios";
-// import store from "@/store/index";
+import authStore from "@/store/auth.js";
 
 axios.interceptors.request.use(
   (config) => {
-    // TODO: Add JWT token here later
-    /* const token = store.getters.oidcAccessToken;
-    if (token != null) {
-      config.headers["Authorization"] = `Bearer ${token}`;
-    } */
+    if (((authStore || {}).loggedInUser || {}).token != null) {
+      const token = authStore.state.loggedInUser.accessToken;
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (err) => {
