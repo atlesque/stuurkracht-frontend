@@ -161,9 +161,12 @@
             </div>
           </div>
           <div class="flex justify-between">
-            <button type="submit" class="button-primary">
+            <!-- <button type="submit" class="button-primary">
               Stuur deze kaart
-            </button>
+            </button> -->
+            <RecaptchaButton @response="handleSubmitForm"
+              >Stuur deze kaart</RecaptchaButton
+            >
             <button
               class="button-primary-outline"
               @click.prevent="handleShowPreview"
@@ -188,9 +191,12 @@
             >{{ message.body }}</pre
           >
           <div class="flex justify-between">
-            <button class="button-primary" @click="handleSubmitForm">
+            <!-- <button class="button-primary" @click="handleSubmitForm">
               Stuur deze kaart
-            </button>
+            </button> -->
+            <RecaptchaButton @response="handleSubmitForm"
+              >Stuur deze kaart</RecaptchaButton
+            >
             <button
               class="button-primary-outline"
               @click.prevent="isPreviewVisible = false"
@@ -219,7 +225,7 @@
     </div>
     <span
       v-show="isSendingMessage === false && error != null"
-      class="block p-4 mt-4 text-xl text-white bg-red-800"
+      class="block p-4 mt-8 text-xl text-white bg-red-800"
       >{{ error }}</span
     >
   </main>
@@ -229,10 +235,12 @@
 import { mapActions, mapState } from "vuex";
 import { required, maxLength, email } from "vuelidate/lib/validators";
 import AutoSizingTextarea from "@/components/AutoSizingTextarea.vue";
+import RecaptchaButton from "@/components/RecaptchaButton.vue";
 
 export default {
   components: {
     AutoSizingTextarea,
+    RecaptchaButton,
   },
   async fetch() {
     this.isLoadingCardDetails = true;
@@ -263,10 +271,14 @@ export default {
   methods: {
     ...mapActions("cards", ["getCardById"]),
     ...mapActions("messages", ["sendMessage"]),
-    async handleSubmitForm() {
+    async handleSubmitForm(recaptchaResponse) {
       this.$v.$touch();
       if (this.$v.$invalid === false) {
-        await this.sendMessage({ ...this.message, cardId: this.cardId });
+        await this.sendMessage({
+          ...this.message,
+          cardId: this.cardId,
+          recaptchaResponse,
+        });
         if (this.isSendingMessage === false && this.error == null) {
           // this.isSuccessMessageVisible = true;
           this.$router.push("/kaart-verstuurd");

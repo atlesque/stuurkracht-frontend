@@ -9,6 +9,7 @@ export default {
     recipientName,
     recipientEmail,
     body,
+    recaptchaResponse,
   }) {
     const response = await HTTP.post(`${API.messages.root}`, {
       cardId,
@@ -17,6 +18,7 @@ export default {
       recipientName,
       recipientEmail,
       body,
+      recaptchaResponse,
     });
     return response;
   },

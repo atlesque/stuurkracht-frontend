@@ -34,7 +34,15 @@ export const mutations = {
 export const actions = {
   async sendMessage(
     { commit },
-    { cardId, senderName, senderEmail, recipientName, recipientEmail, body }
+    {
+      cardId,
+      senderName,
+      senderEmail,
+      recipientName,
+      recipientEmail,
+      body,
+      recaptchaResponse,
+    }
   ) {
     commit(types.CLEAR_ERROR);
     commit(types.START_SENDING_MESSAGE);
@@ -47,6 +55,7 @@ export const actions = {
         recipientName,
         recipientEmail,
         body,
+        recaptchaResponse,
       });
       sentMessage = response.data;
       commit(types.SET_LAST_SENT_MESSAGE, sentMessage);

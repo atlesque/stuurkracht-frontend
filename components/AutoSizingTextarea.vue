@@ -1,12 +1,6 @@
 <script>
 export default {
   name: "AutoSizingTextarea",
-  methods: {
-    resizeTextarea(event) {
-      event.target.style.height = "auto";
-      event.target.style.height = event.target.scrollHeight + "px";
-    },
-  },
   mounted() {
     this.$nextTick(() => {
       this.$el.setAttribute(
@@ -19,6 +13,12 @@ export default {
   },
   beforeDestroy() {
     this.$el.removeEventListener("input", this.resizeTextarea);
+  },
+  methods: {
+    resizeTextarea(event) {
+      event.target.style.height = "auto";
+      event.target.style.height = event.target.scrollHeight + "px";
+    },
   },
   render() {
     return this.$slots.default[0];

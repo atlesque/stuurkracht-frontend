@@ -1,13 +1,13 @@
 <template>
   <main class="p-10">
     <span
-      v-show="availableCards.length <= 0 && this.isLoadingCards === false"
+      v-show="availableCards.length <= 0 && isLoadingCards === false"
       class="text-xl text-theme-gray"
     >
       Er zijn nog geen kaarten aangemaakt.
     </span>
     <span
-      v-show="availableCards.length <= 0 && this.isLoadingCards === true"
+      v-show="availableCards.length <= 0 && isLoadingCards === true"
       class="text-xl text-theme-gray"
     >
       Kaarten worden geladen...
