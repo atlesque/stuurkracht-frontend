@@ -1,16 +1,18 @@
 <template>
   <client-only>
     <main class="p-10">
-      <span v-if="isAuthenticating === true" class="text-xl text-theme-gray"
-        >Bezig met inloggen...</span
-      >
+      <transition name="fade">
+        <span v-if="isAuthenticating === true" class="text-xl text-theme-gray"
+          >Bezig met inloggen...</span
+        >
+      </transition>
       <span
         v-if="isAuthenticating === false && error != null"
         class="block p-4 mt-4 text-xl text-white bg-red-800"
         >{{ error }}</span
       >
       <form
-        v-if="isAuthenticating === false && isLoggedIn === false"
+        v-if="isAuthenticating === false && $auth.loggedIn === false"
         @submit.prevent="handleLogin"
       >
         <h1>Login als beheerder</h1>
@@ -32,10 +34,14 @@
         </div>
         <button type="submit" class="button-primary">Inloggen</button>
       </form>
-      <div v-if="loggedInUser != null && isRedirecting === false">
+      <div
+        v-if="
+          $auth.user != null && $auth.user != false && isRedirecting === false
+        "
+      >
         <h1>
           Je bent aangemeld als
-          <span class="text-theme-gray">{{ loggedInUser.username }}</span>
+          <span class="text-theme-gray">{{ $auth.user }}</span>
         </h1>
         <!-- <pre>{{ loggedInUser }}</pre> -->
         <button class="button-primary" @click="handleLogout">Afmelden</button>
@@ -45,7 +51,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -53,26 +59,34 @@ export default {
       username: "",
       password: "",
       isRedirecting: false,
+      isAuthenticating: false,
+      error: null,
     };
   },
-  computed: {
-    ...mapState("auth", ["isAuthenticating", "loggedInUser", "error"]),
-    ...mapGetters("auth", ["isLoggedIn"]),
-  },
   methods: {
-    ...mapActions("auth", ["login", "logout"]),
+    ...mapActions("auth", ["logout"]),
     async handleLogin() {
-      const response = await this.login({
-        username: this.username,
-        password: this.password,
-      });
-      if (response.accessToken != null) {
+      this.isAuthenticating = true;
+      this.isRedirecting = false;
+      this.error = null;
+      try {
+        const response = await this.$auth.loginWith("local", {
+          data: {
+            username: this.username,
+            password: this.password,
+          },
+        });
         this.isRedirecting = true;
-        this.$router.push("/kaarten");
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+        this.error = "Fout tijdens het inloggen. Controleer je gegevens.";
+      } finally {
+        this.isAuthenticating = false;
       }
     },
     async handleLogout() {
-      await this.logout();
+      await this.$auth.logout();
     },
   },
 };

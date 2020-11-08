@@ -1,3 +1,5 @@
+import { API } from "./config/endpoints/stuurkrachtApi";
+
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
   target: "static",
@@ -42,7 +44,30 @@ export default {
     "@nuxtjs/axios",
     // https://go.nuxtjs.dev/content
     "@nuxt/content",
+    // https://auth.nuxtjs.org
+    "@nuxtjs/auth",
   ],
+
+  // Auth module configuration (https://go.nuxtjs.dev/content)
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: API.auth.login,
+            method: "post",
+            propertyName: "access_token",
+          },
+          user: {
+            url: API.auth.profile,
+            method: "get",
+            propertyName: "username",
+          },
+          logout: null, // No logout route in the API
+        },
+      },
+    },
+  },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {},

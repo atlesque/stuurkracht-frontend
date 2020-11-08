@@ -112,6 +112,7 @@
 import { required, maxLength } from "vuelidate/lib/validators";
 
 export default {
+  middleware: "auth",
   data() {
     return {
       picture: null,

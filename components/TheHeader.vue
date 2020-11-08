@@ -3,7 +3,12 @@
     ref="navMenu"
     class="fixed z-40 flex items-center justify-between w-full px-10 py-6 transition-all duration-500 md:justify-start"
     :class="[
-      { 'is-dark': isPageTransparent === false || isAtPageTop === false },
+      {
+        'is-dark':
+          isMobileMenuVisible === true ||
+          isPageTransparent === false ||
+          isAtPageTop === false,
+      },
     ]"
   >
     <NuxtLink to="/" class="pr-4 text-2xl font-bold uppercase logo"
@@ -25,12 +30,13 @@
         >
       </div>
       <client-only>
-        <NuxtLink
-          v-if="isLoggedIn === true && isLinkActive('/kaarten') === true"
-          to="/kaart-toevoegen"
-          class="nav-link button-primary"
-          >Kaart toevoegen</NuxtLink
+        <button
+          v-if="$auth.loggedIn === true"
+          class="nav-link"
+          @click="handleLogoutClick"
         >
+          Afmelden
+        </button>
       </client-only>
     </div>
     <button
@@ -93,11 +99,11 @@
         </button>
         <client-only>
           <button
-            v-if="isLoggedIn === true && isLinkActive('/kaarten') === true"
-            class="self-start mt-4 nav-link--mobile button-primary"
-            @click="handleMobileLinkClick('/kaart-toevoegen')"
+            v-if="$auth.loggedIn === true"
+            class="flex nav-link--mobile"
+            @click="handleLogoutClick"
           >
-            Kaart toevoegen
+            Afmelden
           </button>
         </client-only>
       </div>
@@ -106,8 +112,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   data() {
     return {
@@ -116,7 +120,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["isLoggedIn"]),
     isPageTransparent() {
       return ["/"].includes(this.$route.path);
     },
@@ -148,6 +151,9 @@ export default {
     isLinkActive(link) {
       return this.$route.path === link;
     },
+    async handleLogoutClick() {
+      await this.$auth.logout();
+    },
   },
 };
 </script>
@@ -159,7 +165,7 @@ nav {
   &:not(.is-dark) {
     @apply bg-transparent;
 
-    a:not(.nav-link--mobile, .logo--mobile),
+    :not(.nav-link--mobile, .logo--mobile),
     .mobile-menu-toggle {
       text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
       color: rgba(255, 255, 255, 0.85);
