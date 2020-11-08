@@ -20,6 +20,7 @@ export default {
   plugins: [
     { src: "~/plugins/vuelidate.js" },
     { src: "~/plugins/vuex-persist.js", mode: "client" },
+    { src: "~/plugins/axios.js" },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

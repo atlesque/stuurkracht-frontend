@@ -1,4 +1,4 @@
-import authApi from "@/api/auth";
+import { API } from "@/config/endpoints/stuurkrachtApi";
 
 const types = {
   START_LOGIN_AUTHENTICATION: "⏱ [Start] login authentication",
@@ -43,7 +43,7 @@ export const actions = {
     commit(types.START_LOGIN_AUTHENTICATION);
     let loggedInUser;
     try {
-      const response = await authApi.login({
+      const response = await this.$axios.post(`${API.auth.login}`, {
         username,
         password,
       });

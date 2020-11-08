@@ -1,14 +1,14 @@
 import axios from "axios";
-// import authStore from "@/store/auth.js";
+import authStore from "@/store/auth.js";
 
 axios.interceptors.request.use(
   (config) => {
-    /* if (
+    if (
       (((authStore || {}).state || {}).loggedInUser || {}).accessToken != null
     ) {
       const token = authStore.state.loggedInUser.accessToken;
       config.headers.Authorization = `Bearer ${token}`;
-    } */
+    }
     return config;
   },
   (err) => {

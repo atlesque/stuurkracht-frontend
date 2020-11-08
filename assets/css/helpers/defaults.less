@@ -33,16 +33,19 @@ main {
   @apply py-2;
   @apply border;
   @apply border-gray-500;
-  @apply rounded;
 }
 
 .form-error {
-  @apply text-red-500;
+  @apply text-red-600;
   @apply hidden;
 }
 
 .form-group--error {
   .form-error {
     @apply inline-block;
+  }
+  .input {
+    @apply border-red-600;
+    @apply border-2;
   }
 }

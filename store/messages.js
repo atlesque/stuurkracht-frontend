@@ -1,4 +1,4 @@
-import messagesApi from "@/api/messages";
+import { API } from "@/config/endpoints/stuurkrachtApi";
 
 const types = {
   START_SENDING_MESSAGE: "⏱ [Start] loading messages",
@@ -48,7 +48,7 @@ export const actions = {
     commit(types.START_SENDING_MESSAGE);
     let sentMessage;
     try {
-      const response = await messagesApi.sendMessage({
+      const response = await this.$axios.post(`${API.messages.root}`, {
         cardId,
         senderName,
         senderEmail,
@@ -74,7 +74,7 @@ export const actions = {
     commit(types.CLEAR_ERROR);
     let messageDetails;
     try {
-      const response = await messagesApi.getMessageById(id);
+      const response = await this.$axios.get(`${API.messages.root}/${id}`);
       messageDetails = response.data;
     } catch (err) {
       console.error(err);

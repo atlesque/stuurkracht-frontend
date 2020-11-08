@@ -1,4 +1,4 @@
-import cardsApi from "@/api/cards";
+import { API } from "@/config/endpoints/stuurkrachtApi";
 
 const types = {
   START_LOADING_CARDS: "⏱ [Start] loading cards",
@@ -37,7 +37,7 @@ export const actions = {
     commit(types.START_LOADING_CARDS);
     let availableCards;
     try {
-      const response = await cardsApi.getAvailableCards();
+      const response = await this.$axios.get(`${API.cards.root}`);
       availableCards = response.data;
       commit(types.SET_AVAILABLE_CARDS, availableCards);
     } catch (err) {
@@ -54,7 +54,7 @@ export const actions = {
   async getCardById({ commit }, id) {
     let cardDetails;
     try {
-      const response = await cardsApi.getCardById(id);
+      const response = await this.$axios.get(`${API.cards.root}/${id}`);
       cardDetails = response.data;
     } catch (err) {
       console.error(err);
