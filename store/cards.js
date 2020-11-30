@@ -4,6 +4,8 @@ const types = {
   START_LOADING_CARDS: "⏱ [Start] loading cards",
   STOP_LOADING_CARDS: "⏱ [Stop] loading cards",
   SET_AVAILABLE_CARDS: "✅ Set available cards",
+  START_ADDING_CARD: "⏱ [Start] adding card",
+  STOP_ADDING_CARD: "⏱ [Stop] adding card",
   SET_ERROR: "⚠ Set error",
   CLEAR_ERROR: "✨ Cleared error",
 };
@@ -22,6 +24,12 @@ export const mutations = {
   },
   [types.SET_AVAILABLE_CARDS](state, cards) {
     state.availableCards = cards;
+  },
+  [types.START_ADDING_CARD](state) {
+    state.isAddingNewCard = true;
+  },
+  [types.STOP_ADDING_CARD](state) {
+    state.isAddingNewCard = false;
   },
   [types.SET_ERROR](state, error) {
     state.error = error;
@@ -52,13 +60,40 @@ export const actions = {
     return availableCards;
   },
   async getCardById({ commit }, id) {
+    commit(types.CLEAR_ERROR);
     let cardDetails;
     try {
       const response = await this.$axios.get(`${API.cards.root}/${id}`);
       cardDetails = response.data;
     } catch (err) {
       console.error(err);
+      commit(
+        types.SET_ERROR,
+        "Fout bij laden van de kaart. Probeer het later opnieuw."
+      );
     }
     return cardDetails;
+  },
+  async addNewCard({ commit, dispatch }, { picture, cardName, authorName }) {
+    commit(types.CLEAR_ERROR);
+    commit(types.START_ADDING_CARD);
+    let newCard;
+    try {
+      const formData = new FormData();
+      formData.append("picture", picture, picture.name);
+      formData.append("cardName", cardName);
+      formData.append("authorName", authorName);
+      const response = await this.$axios.post(API.cards.root, formData);
+      newCard = response.data;
+    } catch (err) {
+      console.error(err);
+      commit(
+        types.SET_ERROR,
+        "Fout bij opladen van de nieuwe kaart. Contacteer de beheerder."
+      );
+    } finally {
+      commit(types.STOP_ADDING_CARD);
+    }
+    return newCard;
   },
 };

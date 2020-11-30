@@ -9,8 +9,8 @@
         class="flex-1 pb-4 md:pb-0"
       >
         <img :src="card.picture" :alt="card.name" />
-        <figcaption v-if="card.copyright != null">
-          {{ card.copyright }}
+        <figcaption v-if="card.copyright != null" class="h-0 text-sm">
+          &copy;&nbsp;<i>{{ card.copyright }}</i>
         </figcaption>
       </figure>
       <template

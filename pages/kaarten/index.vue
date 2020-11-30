@@ -59,11 +59,16 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   async fetch() {
-    // Only get cards on server or when none are available
+    /*
+      Simple client-side caching:
+      Only get cards on server, when none are available
+      or when user is logged in.
+    */
     if (
       process.server ||
       this.availableCards == null ||
-      this.availableCards.length <= 0
+      this.availableCards.length <= 0 ||
+      this.$auth.loggedIn === true
     ) {
       await this.getAvailableCards();
     }
