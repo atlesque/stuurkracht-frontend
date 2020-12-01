@@ -20,6 +20,7 @@ module.exports = {
         },
       },
       minHeight: {
+        "20vh": "20vh",
         "50vh": "50vh",
       },
       fontFamily: {

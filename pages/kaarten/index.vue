@@ -15,15 +15,8 @@
       Kaarten worden geladen...
     </span>
     <span v-if="error != null && error.length > 0" class="text-xl text-red-900">
-      Fout: {{ error }}
+      {{ error }}
     </span>
-    <client-only>
-      <div v-if="$auth.loggedIn === true" class="flex justify-end my-4">
-        <NuxtLink to="/kaart-toevoegen" class="nav-link button-primary"
-          >Kaart toevoegen</NuxtLink
-        >
-      </div>
-    </client-only>
     <ul
       class="grid grid-flow-row grid-cols-2 gap-10 cards-list md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
     >

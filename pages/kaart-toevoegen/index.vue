@@ -2,11 +2,11 @@
   <main class="p-10">
     <div class="flex flex-col md:flex-row" v-if="isCardUploadSuccess === false">
       <div
-        class="flex flex-col flex-1"
+        class="flex flex-col flex-1 mb-4 md:mb-0"
         :class="{ 'form-group--error': $v.cardName.$error }"
       >
         <div
-          class="flex flex-1 font-bold border-2 border-theme-blue text-theme-blue"
+          class="flex flex-1 font-bold border-2 border-theme-blue text-theme-blue min-h-20vh"
         >
           <FileUploader
             class="flex flex-1"

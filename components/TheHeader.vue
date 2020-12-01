@@ -29,14 +29,16 @@
           >Cultuur</NuxtLink
         >
       </div>
-      <client-only>
-        <button
-          v-if="$auth.loggedIn === true"
-          class="nav-link"
-          @click="handleLogoutClick"
-        >
-          Afmelden
-        </button>
+      <client-only v-if="$auth.loggedIn === true">
+        <div class="flex">
+          <button class="nav-link" @click="handleLogoutClick">Afmelden</button>
+          <NuxtLink
+            to="/kaart-toevoegen"
+            class="nav-link"
+            :class="[{ 'nav-link--active': isLinkActive('/kaart-toevoegen') }]"
+            >Kaart toevoegen</NuxtLink
+          >
+        </div>
       </client-only>
     </div>
     <button
@@ -97,12 +99,14 @@
         >
           Cultuur
         </button>
-        <client-only>
+        <client-only v-if="$auth.loggedIn === true">
           <button
-            v-if="$auth.loggedIn === true"
             class="flex nav-link--mobile"
-            @click="handleLogoutClick"
+            @click="handleMobileLinkClick('/kaart-toevoegen')"
           >
+            Kaart toevoegen
+          </button>
+          <button class="flex nav-link--mobile" @click="handleLogoutClick">
             Afmelden
           </button>
         </client-only>

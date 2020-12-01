@@ -3,16 +3,22 @@
     <span v-show="isLoadingCardDetails === true" class="text-xl text-theme-gray"
       >Kaart wordt geladen...</span
     >
-    <div class="flex flex-col md:flex-row">
-      <figure
-        v-if="card != null && card.picture != null"
-        class="flex-1 pb-4 md:pb-0"
-      >
-        <img :src="card.picture" :alt="card.name" />
-        <figcaption v-if="card.copyright != null" class="h-0 text-sm">
-          &copy;&nbsp;<i>{{ card.copyright }}</i>
-        </figcaption>
-      </figure>
+    <div v-if="hasCardLoadError === false" class="flex flex-col md:flex-row">
+      <div class="flex flex-col flex-1">
+        <figure v-if="card != null && card.picture != null" class="pb-4">
+          <img :src="card.picture" :alt="card.name" />
+          <figcaption v-if="card.copyright != null" class="h-0 text-sm">
+            &copy;&nbsp;<i>{{ card.copyright }}</i>
+          </figcaption>
+        </figure>
+        <client-only v-if="$auth.loggedIn === true">
+          <NuxtLink
+            :to="`/kaart/${cardId}/bewerken`"
+            class="button-primary-outline"
+            >Bewerk deze kaart</NuxtLink
+          >
+        </client-only>
+      </div>
       <template
         v-if="isSendingMessage === false && isSuccessMessageVisible === false"
       >
@@ -228,6 +234,12 @@
       class="block p-4 mt-8 text-xl text-white bg-red-800"
       >{{ error }}</span
     >
+    <span
+      v-if="hasCardLoadError === true"
+      class="block p-4 mt-8 text-xl text-white bg-red-800"
+      >Fout tijdens laden van de kaart. Controleer de link of probeer een andere
+      kaart.</span
+    >
   </main>
 </template>
 
@@ -244,7 +256,12 @@ export default {
   },
   async fetch() {
     this.isLoadingCardDetails = true;
-    this.card = await this.getCardById(this.cardId);
+    const cardInfo = await this.getCardById(this.cardId);
+    if (cardInfo != null) {
+      this.card = cardInfo;
+    } else {
+      this.hasCardLoadError = true;
+    }
     this.isLoadingCardDetails = false;
   },
   data() {
@@ -253,6 +270,7 @@ export default {
       isLoadingCardDetails: false,
       isPreviewVisible: false,
       isSuccessMessageVisible: false,
+      hasCardLoadError: false,
       message: {
         senderName: "Alex",
         senderEmail: "alexander@atlesque.com",
