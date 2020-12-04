@@ -100,13 +100,21 @@ export const actions = {
     }
     return messageDetails;
   },
-  async getAllSentMessages({ commit }) {
+  async getAllSentMessages({ commit }, { page = 0, pageSize = 10 } = {}) {
     commit(types.CLEAR_ERROR);
     commit(types.START_LOADING_ALL_SENT_MESSAGES);
     let allSentMessages;
     try {
-      const response = await this.$axios.get(API.messages.root);
-      allSentMessages = response.data;
+      const response = await this.$axios.get(API.messages.root, {
+        params: {
+          page,
+          pageSize,
+        },
+      });
+      allSentMessages = {
+        messages: response.data.results,
+        totalMessages: response.data.total,
+      };
     } catch (err) {
       console.error(err);
       commit(

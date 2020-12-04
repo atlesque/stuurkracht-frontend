@@ -301,7 +301,6 @@ export default {
           recaptchaResponse,
         });
         if (this.isSendingMessage === false && this.error == null) {
-          // this.isSuccessMessageVisible = true;
           this.$router.push("/kaart-verstuurd");
         }
       }
