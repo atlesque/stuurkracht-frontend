@@ -17,6 +17,7 @@ const types = {
 export const state = () => ({
   isLoadingCards: false,
   isSavingCard: false,
+  isAddingNewCard: false,
   availableCards: [],
   /*
     Error handling
@@ -129,6 +130,46 @@ export const actions = {
       commit(
         types.SET_ERROR,
         "Fout bij opslaan van de kaart. Contacteer de beheerder."
+      );
+    } finally {
+      commit(types.STOP_SAVING_CARD);
+    }
+    return savedCard;
+  },
+  async archiveCard({ commit }, id) {
+    commit(types.CLEAR_ERROR);
+    commit(types.START_SAVING_CARD);
+    let savedCard;
+    try {
+      const response = await this.$axios.put(`${API.cards.root}/${id}`, {
+        isArchived: true,
+      });
+      savedCard = response.data;
+    } catch (err) {
+      console.error(err);
+      commit(
+        types.SET_ERROR,
+        "Fout bij archiveren van de kaart. Contacteer de beheerder."
+      );
+    } finally {
+      commit(types.STOP_SAVING_CARD);
+    }
+    return savedCard;
+  },
+  async unarchiveCard({ commit }, id) {
+    commit(types.CLEAR_ERROR);
+    commit(types.START_SAVING_CARD);
+    let savedCard;
+    try {
+      const response = await this.$axios.put(`${API.cards.root}/${id}`, {
+        isArchived: false,
+      });
+      savedCard = response.data;
+    } catch (err) {
+      console.error(err);
+      commit(
+        types.SET_ERROR,
+        "Fout bij terug actief maken van de kaart. Contacteer de beheerder."
       );
     } finally {
       commit(types.STOP_SAVING_CARD);

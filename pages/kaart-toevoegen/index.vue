@@ -1,6 +1,9 @@
 <template>
   <main class="p-10">
-    <div v-if="isCardUploadSuccess === false" class="flex flex-col md:flex-row">
+    <div
+      v-if="isCardUploadSuccess === false && isAddingNewCard === false"
+      class="flex flex-col md:flex-row"
+    >
       <div
         class="flex flex-col flex-1 mb-4 md:mb-0"
         :class="{ 'form-group--error': $v.cardName.$error }"
@@ -73,16 +76,36 @@
         </div>
       </form>
     </div>
-    <div v-else class="max-w-xl mx-auto text-center">
-      <h1 class="mb-8 upperclass">Je kaart is toegevoegd!</h1>
+    <div
+      v-if="isCardUploadSuccess === true && isAddingNewCard === false"
+      class="max-w-xl mx-auto text-center"
+    >
+      <h1 class="mb-8 upperclass">De kaart is toegevoegd!</h1>
       <div class="flex flex-col">
-        <button class="self-center mb-8 button-primary" @click="resetForm">
+        <NuxtLink
+          :to="`/kaart/${newCardId}`"
+          class="self-center mb-4 button-primary"
+        >
+          Bekijk de nieuwe kaart
+        </NuxtLink>
+        <button
+          class="self-center mb-8 button-primary-outline"
+          @click="resetForm"
+        >
           Nieuwe kaart toevoegen
         </button>
         <NuxtLink to="/kaarten" class="self-center">
           Terug naar alle kaarten
         </NuxtLink>
       </div>
+    </div>
+    <div
+      v-if="isAddingNewCard === true"
+      class="flex items-center justify-center flex-1 md:pl-10"
+    >
+      <span class="p-10 text-xl text-theme-gray"
+        >Een ogenblik alsjeblieft...</span
+      >
     </div>
   </main>
 </template>
@@ -104,11 +127,12 @@ export default {
       picture: null,
       cardName: "",
       authorName: "",
+      newCardId: null,
       isCardUploadSuccess: false,
     };
   },
   computed: {
-    ...mapState("cards", ["isAddingNewCard"]),
+    ...mapState("cards", ["isAddingNewCard", "isAddingNewCard"]),
   },
   methods: {
     ...mapActions("cards", ["addNewCard"]),
@@ -122,6 +146,7 @@ export default {
         });
         if (response != null) {
           this.isCardUploadSuccess = true;
+          this.newCardId = response.id;
         }
       }
     },
