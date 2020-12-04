@@ -11,7 +11,7 @@
     >
       <figure class="flex-1 pb-4 md:pb-0">
         <img :src="message.card.picture" :alt="message.card.name" />
-        <figcaption v-if="card.copyright != null" class="h-0 text-sm">
+        <figcaption v-if="card.copyright != null" class="h-0 mb-2 text-sm">
           &copy;&nbsp;<i>{{ card.copyright }}</i>
         </figcaption>
       </figure>

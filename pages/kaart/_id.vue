@@ -7,7 +7,10 @@
       <div class="flex flex-col flex-1">
         <figure v-if="card != null && card.picture != null" class="pb-4">
           <img :src="card.picture" :alt="card.name" />
-          <figcaption v-if="card.copyright != null" class="h-0 text-sm">
+          <figcaption
+            v-if="card.copyright != null && card.copyright.length > 0"
+            class="h-0 mb-2 text-sm"
+          >
             &copy;&nbsp;<i>{{ card.copyright }}</i>
           </figcaption>
         </figure>

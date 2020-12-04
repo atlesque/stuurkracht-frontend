@@ -52,6 +52,10 @@ export default {
   auth: {
     strategies: {
       local: {
+        token: {
+          property: "access_token",
+          maxAge: 86400, // 1 day
+        },
         endpoints: {
           login: {
             url: API.auth.login,

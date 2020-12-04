@@ -1,6 +1,6 @@
 <template>
   <main class="p-10">
-    <div class="flex flex-col md:flex-row" v-if="isCardUploadSuccess === false">
+    <div v-if="isCardUploadSuccess === false" class="flex flex-col md:flex-row">
       <div
         class="flex flex-col flex-1 mb-4 md:mb-0"
         :class="{ 'form-group--error': $v.cardName.$error }"
