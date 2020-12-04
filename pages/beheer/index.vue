@@ -44,47 +44,46 @@
           Je bent aangemeld als
           <span class="text-theme-gray">{{ $auth.user }}</span>
         </h1>
-        <button
-          class="block underline"
-          @click="isDebugInfoVisible = !isDebugInfoVisible"
-        >
-          <span v-if="isDebugInfoVisible === true"
-            >Verberg technische details</span
+        <div class="mb-10">
+          <button
+            class="block underline"
+            @click="isDebugInfoVisible = !isDebugInfoVisible"
           >
-          <span v-else>Toon technische details</span>
-        </button>
-        <div v-if="isDebugInfoVisible === true" class="pl-4">
-          <h2>Technische details</h2>
-          <div class="pl-4 token-debug-info">
-            <h3 class="font-bold">Nuxt auth module state:</h3>
-            <pre>{{ nuxtAuthStatus }}</pre>
-            <h3 class="font-bold">Decoded JWT token:</h3>
-            <pre>{{ decodedToken }}</pre>
-            <h3 class="font-bold">Token expires at:</h3>
-            <pre>{{ tokenExpiryTime }}</pre>
-            <h3 class="font-bold">Raw JWT token:</h3>
-            <p class="max-w-xl break-all">{{ rawToken }}</p>
+            <span v-if="isDebugInfoVisible === true"
+              >Verberg technische details</span
+            >
+            <span v-else>Toon technische details</span>
+          </button>
+          <div v-if="isDebugInfoVisible === true" class="pl-4">
+            <LoginDebugInfo />
           </div>
         </div>
-        <button class="mt-8 button-primary" @click="handleLogout">
-          Afmelden
-        </button>
+        <div class="flex flex-col max-w-sm action-buttons">
+          <NuxtLink to="/beheer/kaart-toevoegen" class="button-primary"
+            >Nieuwe kaart toevoegen</NuxtLink
+          >
+          <NuxtLink to="/beheer/verstuurde-kaarten" class="button-primary"
+            >Verstuurde kaarten bekijken</NuxtLink
+          >
+          <button class="button-primary-outline" @click="handleLogout">
+            Afmelden
+          </button>
+        </div>
       </div>
     </main>
   </client-only>
 </template>
 
 <style lang="less" scoped>
-.token-debug-info {
-  h3 {
-    @apply mt-4;
+.action-buttons {
+  & > * {
+    @apply mb-4;
   }
 }
 </style>
 
 <script>
 import { mapActions } from "vuex";
-import jwtDecode from "jwt-decode";
 
 export default {
   data() {
@@ -96,21 +95,6 @@ export default {
       isDebugInfoVisible: false,
       error: null,
     };
-  },
-  computed: {
-    nuxtAuthStatus() {
-      return this.$store.state.auth;
-    },
-    rawToken() {
-      const token = this.$auth.$storage.getUniversal("_token.local");
-      return token;
-    },
-    decodedToken() {
-      return jwtDecode(this.rawToken);
-    },
-    tokenExpiryTime() {
-      return new Date(this.decodedToken.exp * 1000);
-    },
   },
   methods: {
     ...mapActions("auth", ["logout"]),

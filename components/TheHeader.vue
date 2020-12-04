@@ -31,12 +31,11 @@
       </div>
       <client-only>
         <div v-if="$auth.loggedIn === true" class="flex">
-          <button class="nav-link" @click="handleLogoutClick">Afmelden</button>
           <NuxtLink
-            to="/kaart-toevoegen"
+            to="/beheer"
             class="nav-link"
-            :class="[{ 'nav-link--active': isLinkActive('/kaart-toevoegen') }]"
-            >Kaart toevoegen</NuxtLink
+            :class="[{ 'nav-link--active': isLinkActive('/beheer') }]"
+            >Beheer</NuxtLink
           >
         </div>
       </client-only>
@@ -103,12 +102,9 @@
           <div v-if="$auth.loggedIn === true">
             <button
               class="flex nav-link--mobile"
-              @click="handleMobileLinkClick('/kaart-toevoegen')"
+              @click="handleMobileLinkClick('/beheer')"
             >
-              Kaart toevoegen
-            </button>
-            <button class="flex nav-link--mobile" @click="handleLogoutClick">
-              Afmelden
+              Beheer
             </button>
           </div>
         </client-only>
@@ -135,11 +131,6 @@ export default {
   },
   mounted() {
     document.addEventListener("scroll", () => {
-      /* if (document.documentElement.scrollTop > 20) {
-        this.$refs.navMenu.classList.add("fixed");
-      } else {
-        this.$refs.navMenu.classList.remove("fixed");
-      } */
       this.scrollTop = document.documentElement.scrollTop;
     });
   },
@@ -156,9 +147,6 @@ export default {
     },
     isLinkActive(link) {
       return this.$route.path === link;
-    },
-    async handleLogoutClick() {
-      await this.$auth.logout();
     },
   },
 };

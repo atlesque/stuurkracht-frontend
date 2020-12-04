@@ -36,6 +36,13 @@ export default {
     "@nuxtjs/stylelint-module",
     // https://go.nuxtjs.dev/tailwindcss
     "@nuxtjs/tailwindcss",
+    // https://github.com/nuxt-community/date-fns-module
+    [
+      "@nuxtjs/date-fns",
+      {
+        defaultLocale: "nl",
+      },
+    ],
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)

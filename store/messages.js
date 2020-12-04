@@ -4,13 +4,19 @@ const types = {
   START_SENDING_MESSAGE: "⏱ [Start] loading messages",
   STOP_SENDING_MESSAGE: "⏱ [Stop] loading messages",
   SET_LAST_SENT_MESSAGE: "✅ Set last sent message",
+  START_LOADING_ALL_SENT_MESSAGES: "⏱ [Start] loading all sent messages",
+  STOP_LOADING_ALL_SENT_MESSAGES: "⏱ [Stop] loading all sent messages",
+  /* 
+    Error handling
+  */
   SET_ERROR: "⚠ Set error",
   CLEAR_ERROR: "✨ Cleared error",
 };
 export const state = () => ({
   isSendingMessage: false,
-  error: null,
+  isLoadingAllSentMessages: false,
   lastSentMessage: null,
+  error: null,
 });
 
 export const mutations = {
@@ -23,6 +29,15 @@ export const mutations = {
   [types.SET_LAST_SENT_MESSAGE](state, message) {
     state.lastSentMessage = message;
   },
+  [types.START_LOADING_ALL_SENT_MESSAGES](state) {
+    state.isLoadingAllSentMessages = true;
+  },
+  [types.STOP_LOADING_ALL_SENT_MESSAGES](state) {
+    state.isLoadingAllSentMessages = false;
+  },
+  /* 
+    Error handling
+  */
   [types.SET_ERROR](state, error) {
     state.error = error;
   },
@@ -84,5 +99,23 @@ export const actions = {
       );
     }
     return messageDetails;
+  },
+  async getAllSentMessages({ commit }) {
+    commit(types.CLEAR_ERROR);
+    commit(types.START_LOADING_ALL_SENT_MESSAGES);
+    let allSentMessages;
+    try {
+      const response = await this.$axios.get(API.messages.root);
+      allSentMessages = response.data;
+    } catch (err) {
+      console.error(err);
+      commit(
+        types.SET_ERROR,
+        "Fout bij ophalen van verstuurde kaarten. Probeer het later opnieuw."
+      );
+    } finally {
+      commit(types.STOP_LOADING_ALL_SENT_MESSAGES);
+    }
+    return allSentMessages;
   },
 };
