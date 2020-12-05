@@ -260,7 +260,7 @@ export default {
   async fetch() {
     this.isLoadingCardDetails = true;
     const cardInfo = await this.getCardById(this.cardId);
-    if (cardInfo != null) {
+    if (cardInfo != null && typeof cardInfo === "object") {
       this.card = cardInfo;
     } else {
       this.hasCardLoadError = true;

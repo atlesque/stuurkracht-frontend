@@ -104,7 +104,7 @@ export const actions = {
       console.error(err);
       commit(
         types.SET_ERROR,
-        "Fout bij laden van de kaart. Probeer het later opnieuw."
+        "Fout bij laden van de boodschap. Controleer de link of probeer het later opnieuw."
       );
     }
     return messageDetails;
