@@ -364,7 +364,7 @@ export default {
     },
   },
   head() {
-    const title = this.card.name;
+    const title = this.card != null ? this.card.name : "Kaart sturen";
     const description =
       "Stuur deze gratis kaart met steunende boodschap via Stuurkracht.be";
     return {
