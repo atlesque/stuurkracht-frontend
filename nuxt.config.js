@@ -4,6 +4,11 @@ export default {
   // Target (https://go.nuxtjs.dev/config-target)
   target: "static",
 
+  // Server configuration (https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-server)
+  server: {
+    port: process.env.NUXT_ENV_SERVER_PORT || 3000,
+  },
+
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: "Geef kracht met een kaartje",
