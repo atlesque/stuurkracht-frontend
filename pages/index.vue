@@ -1,8 +1,9 @@
 <template>
   <main class="transparent-header">
-    <section class="flex items-end min-h-screen p-10 pb-20 hero">
-      <div>
-        <p class="text-2xl font-bold text-white hero-text">
+    <section class="relative flex items-end min-h-screen p-10 md:pb-20 hero">
+      <div class="absolute inset-0 flex-1 bg-black opacity-50 md:hidden"></div>
+      <div class="relative">
+        <p class="text-xl font-bold text-white md:text-2xl hero-text">
           Op deze website kan je gratis e-cards sturen om kracht en steun te
           geven in verbondenheid. In het bijzonder aan personen die omgaan met
           verlies.
@@ -57,7 +58,6 @@
   background-repeat: no-repeat;
 }
 .hero-text {
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
   @apply max-w-xl;
 }
 .bg-feather {
