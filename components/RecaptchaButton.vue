@@ -2,14 +2,17 @@
   <div>
     <transition name="fade" mode="out-in">
       <button
-        v-if="isRecaptchaVisible === false"
+        v-if="isInitialButtonVisible === true"
         :class="buttonClass"
         @click.prevent="handleClick"
       >
         <slot></slot>
       </button>
     </transition>
-    <div v-if="isRecaptchaVisible === true" key="recaptchaVerification">
+    <div
+      v-if="isInitialButtonVisible === false || isRecaptchaVisible === true"
+      key="recaptchaVerification"
+    >
       <vue-recaptcha
         class="h-0 transition-opacity duration-200"
         :class="[{ 'opacity-0': isRecaptchaLoaded === false }]"
@@ -33,6 +36,10 @@ export default {
       type: String,
       default: "button-primary",
     },
+    onlyShowCaptcha: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -43,6 +50,11 @@ export default {
   computed: {
     recaptchaKey() {
       return process.env.NUXT_ENV_RECAPTCHA_KEY;
+    },
+    isInitialButtonVisible() {
+      return (
+        this.onlyShowCaptcha === false && this.isRecaptchaVisible === false
+      );
     },
   },
   methods: {

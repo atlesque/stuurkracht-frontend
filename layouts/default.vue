@@ -2,6 +2,8 @@
   <div>
     <TheHeader />
     <Nuxt />
-    <CookieWarning />
+    <client-only>
+      <CookieWarning />
+    </client-only>
   </div>
 </template>

@@ -170,10 +170,18 @@
             </div>
           </div>
           <div class="flex justify-between">
-            <!-- <button type="submit" class="button-primary">
+            <button
+              v-show="isRecaptchaVisible === false"
+              class="button-primary"
+              type="button"
+              @click="handleSubmitClick"
+            >
               Stuur deze kaart
-            </button> -->
-            <RecaptchaButton @response="handleSubmitForm"
+            </button>
+            <RecaptchaButton
+              v-show="isRecaptchaVisible === true"
+              :only-show-captcha="true"
+              @response="handleSubmitForm"
               >Stuur deze kaart</RecaptchaButton
             >
             <button
@@ -192,7 +200,7 @@
             Zo zal jouw boodschap eruit zien:
           </span>
           <h1 class="mt-0">
-            <span> {{ message.senderName }} heeft je kracht gestuurd</span>
+            <span>{{ message.senderName }} heeft je kracht gestuurd</span>
           </h1>
           <pre
             v-if="message.body.length > 0"
@@ -200,10 +208,18 @@
             >{{ message.body }}</pre
           >
           <div class="flex justify-between">
-            <!-- <button class="button-primary" @click="handleSubmitForm">
+            <button
+              v-show="isRecaptchaVisible === false"
+              class="button-primary"
+              type="button"
+              @click="handleSubmitClick"
+            >
               Stuur deze kaart
-            </button> -->
-            <RecaptchaButton @response="handleSubmitForm"
+            </button>
+            <RecaptchaButton
+              v-show="isRecaptchaVisible === true"
+              :only-show-captcha="true"
+              @response="handleSubmitForm"
               >Stuur deze kaart</RecaptchaButton
             >
             <button
@@ -273,12 +289,13 @@ export default {
       isLoadingCardDetails: false,
       isPreviewVisible: false,
       isSuccessMessageVisible: false,
+      isRecaptchaVisible: false,
       hasCardLoadError: false,
       message: {
-        senderName: "Alex",
-        senderEmail: "alexander@atlesque.com",
-        recipientName: "Inge",
-        recipientEmail: "inge.van.meenen@mailinator.com",
+        senderName: "",
+        senderEmail: "",
+        recipientName: "",
+        recipientEmail: "",
         body: "",
       },
     };
@@ -292,6 +309,12 @@ export default {
   methods: {
     ...mapActions("cards", ["getCardById"]),
     ...mapActions("messages", ["sendMessage"]),
+    handleSubmitClick() {
+      this.$v.$touch();
+      if (this.$v.$invalid === false) {
+        this.isRecaptchaVisible = true;
+      }
+    },
     async handleSubmitForm(recaptchaResponse) {
       this.$v.$touch();
       if (this.$v.$invalid === false) {
@@ -301,7 +324,7 @@ export default {
           recaptchaResponse,
         });
         if (this.isSendingMessage === false && this.error == null) {
-          this.$gtag.event(`send_card_${this.cardId}`, {
+          this.$gtag("event", `send_card_${this.cardId}`, {
             event_category: "messages",
           });
           this.$router.push("/kaart-verstuurd");

@@ -111,11 +111,11 @@ export default {
           },
         });
         if (response.status === 201) {
-          this.$gtag.event(`logged_in_${this.username}`, {
+          this.$gtag("event", `logged_in_${this.username}`, {
             event_category: "users",
           });
         } else {
-          this.$gtag.event(`failed_login`, {
+          this.$gtag("event", `failed_login`, {
             event_category: "users",
             event_label: "failed_login",
             value: `username: ${this.username}`,
