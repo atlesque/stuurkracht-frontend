@@ -48,3 +48,35 @@
   background-repeat: no-repeat;
 }
 </style>
+
+<script>
+export default {
+  head() {
+    const title = "Cultuur";
+    const description =
+      "Ontdek de Stuurkracht cultuur van openheid en verdraagzaamheid";
+    const keywords = "cultuur, over ons, info, stuurkracht";
+    return {
+      title,
+      description,
+      meta: [
+        {
+          property: "og:title",
+          content: title,
+          hid: "og:title",
+        },
+        {
+          property: "og:description",
+          content: description,
+          hid: "og:description",
+        },
+        {
+          property: "keywords",
+          content: keywords,
+          hid: "og:keywords",
+        },
+      ],
+    };
+  },
+};
+</script>

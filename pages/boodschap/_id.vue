@@ -70,5 +70,32 @@ export default {
   methods: {
     ...mapActions("messages", ["getMessageById"]),
   },
+  head() {
+    const title = "Bekijk jouw kaart";
+    const description = `${this.message.senderName} heeft je kracht gestuurd. Bekijk hier hun online kaartje`;
+    const keywords =
+      "kaart ontvangen, e-card, elektronische kaart, persoonlijke boodschap";
+    return {
+      title,
+      description,
+      meta: [
+        {
+          property: "og:title",
+          content: title,
+          hid: "og:title",
+        },
+        {
+          property: "og:description",
+          content: description,
+          hid: "og:description",
+        },
+        {
+          property: "keywords",
+          content: keywords,
+          hid: "og:keywords",
+        },
+      ],
+    };
+  },
 };
 </script>

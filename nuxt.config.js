@@ -6,15 +6,58 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: "stuurkracht-frontend",
+    title: "Geef kracht met een kaartje",
+    titleTemplate: "%s | Stuurkracht",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" },
+      {
+        hid: "description",
+        name: "description",
+        content:
+          "Stuur een gratis e-card met persoonlijke boodschap om iemand te steunen",
+      },
+      {
+        hid: "keywords",
+        property: "keywords",
+        content:
+          "gratis e-card, elektronisch kaartje, elektronische kaarten, online kaart, digitale kaart, persoonlijke boodschap, steun, kracht, motivatie",
+      },
+      /*
+        Open Graph Information
+      */
+      {
+        hid: "og:title",
+        property: "og:title",
+        content: "Geef kracht met een kaartje",
+        template: "%s | Stuurkracht",
+      },
+      {
+        hid: "og:description",
+        property: "og:description",
+        content:
+          "Stuur een gratis e-card met persoonlijke boodschap om iemand te steunen",
+      },
+      {
+        hid: "og:site_name",
+        property: "og:site_name",
+        content: "stuurkracht.be",
+      },
+      {
+        hid: "og:image",
+        property: "og:image",
+        content: "https://stuurkracht.be/images/og-image.jpg",
+      },
     ],
     link: [
       {
+        rel: "icon",
+        type: "image/x-icon",
+        href: "/images/favicon/favicon.ico",
+      },
+      {
         rel: "apple-touch-icon",
+        type: "image/png",
         sizes: "180x180",
         href: "/images/favicon/apple-touch-icon.png",
       },

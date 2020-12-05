@@ -363,5 +363,26 @@ export default {
       },
     },
   },
+  head() {
+    const title = this.card.name;
+    const description =
+      "Stuur deze gratis kaart met steunende boodschap via Stuurkracht.be";
+    return {
+      title,
+      description,
+      meta: [
+        {
+          property: "og:title",
+          content: title,
+          hid: "og:title",
+        },
+        {
+          property: "og:description",
+          content: description,
+          hid: "og:description",
+        },
+      ],
+    };
+  },
 };
 </script>

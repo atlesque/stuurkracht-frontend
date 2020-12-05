@@ -84,5 +84,32 @@ export default {
   methods: {
     ...mapActions("cards", ["getAvailableCards"]),
   },
+  head() {
+    const title = "Kaarten";
+    const description =
+      "Stuur een gratis e-card met steun. Bekijk hier alle beschikbare kaarten";
+    const keywords = "kaartenlijst, e-cards, elektronische kaarten";
+    return {
+      title,
+      description,
+      meta: [
+        {
+          property: "og:title",
+          content: title,
+          hid: "og:title",
+        },
+        {
+          property: "og:description",
+          content: description,
+          hid: "og:description",
+        },
+        {
+          property: "keywords",
+          content: keywords,
+          hid: "og:keywords",
+        },
+      ],
+    };
+  },
 };
 </script>

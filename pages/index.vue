@@ -3,9 +3,9 @@
     <section class="flex items-end min-h-screen p-10 pb-20 hero">
       <div>
         <p class="text-2xl font-bold text-white hero-text">
-          Op deze website kunnen bezoekers een e-card sturen om kracht en steun
-          te geven in verbondenheid. In het bijzonder aan personen die met
-          verlies omgaan.
+          Op deze website kan je gratis e-cards sturen om kracht en steun te
+          geven in verbondenheid. In het bijzonder aan personen die omgaan met
+          verlies.
         </p>
         <NuxtLink to="/kaarten" class="button-primary"
           >Stuur een kaartje</NuxtLink
@@ -48,10 +48,6 @@
     </section>
   </main>
 </template>
-
-<script>
-export default {};
-</script>
 
 <style lang="less" scoped>
 .hero {

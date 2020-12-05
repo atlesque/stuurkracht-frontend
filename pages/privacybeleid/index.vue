@@ -49,3 +49,34 @@
     </p>
   </main>
 </template>
+
+<script>
+export default {
+  head() {
+    const title = "Privacybeleid";
+    const description = "Lees hoe we jouw privacy waarborgen";
+    const keywords = "privacybeleid, privacy policy, gdpr, cookies";
+    return {
+      title,
+      description,
+      meta: [
+        {
+          property: "og:title",
+          content: title,
+          hid: "og:title",
+        },
+        {
+          property: "og:description",
+          content: description,
+          hid: "og:description",
+        },
+        {
+          property: "keywords",
+          content: keywords,
+          hid: "og:keywords",
+        },
+      ],
+    };
+  },
+};
+</script>

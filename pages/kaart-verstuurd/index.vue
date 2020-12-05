@@ -39,9 +39,6 @@
 import { mapState } from "vuex";
 
 export default {
-  /* transition: {
-    name: "home",
-  }, */
   computed: {
     ...mapState("messages", ["lastSentMessage"]),
     messageUrl() {
@@ -54,6 +51,26 @@ export default {
     handleCopyLink() {
       navigator.clipboard.writeText(this.messageUrl);
     },
+  },
+  head() {
+    const title = "Kaart verstuurd";
+    const description = "Je kaart werd verstuurd!";
+    return {
+      title,
+      description,
+      meta: [
+        {
+          property: "og:title",
+          content: title,
+          hid: "og:title",
+        },
+        {
+          property: "og:description",
+          content: description,
+          hid: "og:description",
+        },
+      ],
+    };
   },
 };
 </script>
