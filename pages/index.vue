@@ -1,6 +1,6 @@
 <template>
   <main class="transparent-header">
-    <section class="relative flex items-end min-h-screen p-10 md:pb-20 hero">
+    <section class="relative flex items-end min-h-screen p-10 pb-20 hero">
       <div class="absolute inset-0 flex-1 bg-black opacity-50 md:hidden"></div>
       <div class="relative">
         <p class="text-xl font-bold text-white md:text-2xl hero-text">
