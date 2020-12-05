@@ -32,7 +32,8 @@
             />
           </div>
         </div>
-        <button type="submit" class="button-primary">Inloggen</button>
+        <!-- <button type="submit" class="button-primary">Inloggen</button> -->
+        <RecaptchaButton @response="handleLogin">Inloggen</RecaptchaButton>
       </form>
 
       <div
@@ -98,7 +99,7 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["logout"]),
-    async handleLogin() {
+    async handleLogin(recaptchaResponse) {
       this.isAuthenticating = true;
       this.isRedirecting = false;
       this.error = null;
@@ -107,6 +108,7 @@ export default {
           data: {
             username: this.username,
             password: this.password,
+            recaptchaResponse,
           },
         });
         this.isRedirecting = true;
