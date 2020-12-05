@@ -2,7 +2,7 @@ import { API } from "./config/endpoints/stuurkrachtApi";
 
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
-  target: "static",
+  target: "server",
 
   // Server configuration (https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-server)
   server: {
