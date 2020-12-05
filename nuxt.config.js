@@ -174,4 +174,16 @@ export default {
       },
     },
   },
+
+  // Router config (https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-router)
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: "custom",
+        path: "*",
+        component: resolve(__dirname, "pages/404.vue"),
+      });
+    },
+    middleware: "remove-double-slash",
+  },
 };
