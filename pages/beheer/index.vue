@@ -62,8 +62,8 @@
           <NuxtLink to="/beheer/kaart-toevoegen" class="button-primary"
             >Nieuwe kaart toevoegen</NuxtLink
           >
-          <NuxtLink to="/beheer/verstuurde-kaarten" class="button-primary"
-            >Verstuurde kaarten bekijken</NuxtLink
+          <NuxtLink to="/beheer/statistieken" class="button-primary-outline"
+            >Statistieken bekijken</NuxtLink
           >
           <button class="button-primary-outline" @click="handleLogout">
             Afmelden

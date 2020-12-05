@@ -1,19 +1,84 @@
 <template>
-  <main class="p-10">
+  <main class="max-w-6xl p-10">
+    <h1>Statistieken</h1>
+    <dl
+      v-if="statistics != null"
+      class="grid grid-cols-1 gap-5 mt-5 lg:grid-cols-3"
+    >
+      <div class="overflow-hidden bg-white rounded-lg shadow">
+        <div class="px-4 py-5 sm:p-6">
+          <dt>
+            <h2 class="mt-0 font-bold">Aantal verstuurde kaarten</h2>
+          </dt>
+          <dd class="mt-1 text-3xl font-semibold text-gray-900">
+            {{ statistics.totalSentMessages }}
+          </dd>
+        </div>
+      </div>
+
+      <div class="overflow-hidden bg-white rounded-lg shadow">
+        <div class="px-4 py-5 sm:p-6">
+          <dt>
+            <h2 class="mt-0 font-bold">Meest populaire kaarten</h2>
+          </dt>
+          <dd class="mt-1 text-theme-blue">
+            <ul class="grid grid-cols-3 gap-4">
+              <li
+                v-for="(card, index) in statistics.mostPopularCards"
+                :key="index"
+                class="flex flex-col items-center"
+              >
+                <NuxtLink :to="`/kaart/${card.id}`"
+                  ><img
+                    :src="card.picture"
+                    alt="card.name"
+                    class="h-16 rounded"
+                /></NuxtLink>
+                <span class="block text-center">x{{ card.totalSent }}</span>
+              </li>
+            </ul>
+          </dd>
+        </div>
+      </div>
+
+      <div class="overflow-hidden bg-white rounded-lg shadow">
+        <div class="px-4 py-5 sm:p-6">
+          <dt>
+            <h2 class="mt-0 font-bold">Meest actieve zenders</h2>
+          </dt>
+          <dd class="mt-1 text-theme-blue">
+            <ul>
+              <li
+                v-for="(sender, index) in statistics.mostActiveSenders"
+                :key="index"
+                class="flex flex-col"
+              >
+                <div class="flex items-center">
+                  <span class="break-all">{{ sender.email }}</span>
+                  <span class="text-sm text-theme-blue-light"
+                    >&nbsp;({{ sender.totalSent }})</span
+                  >
+                </div>
+              </li>
+            </ul>
+          </dd>
+        </div>
+      </div>
+    </dl>
     <h1>Verstuurde kaarten</h1>
     <ul class="grid grid-cols-1 gap-5 mt-3 sm:gap-6">
       <li
         v-for="(message, index) in sentMessages"
         :key="index"
-        class="flex col-span-1 rounded-md shadow-sm"
+        class="flex flex-col col-span-1 rounded-md shadow-sm sm:flex-row"
       >
         <div
-          class="flex items-center justify-center flex-shrink-0 w-32 overflow-hidden text-sm font-medium rounded-l-md bg-theme-blue"
+          class="flex items-center justify-center flex-shrink-0 w-32 mx-auto overflow-hidden text-sm font-medium rounded-t-md sm:mx-0 sm:rounded-r-none bg-theme-blue"
         >
           <img :src="message.card.picture" class="object-cover w-full h-full" />
         </div>
         <div
-          class="flex items-center justify-between flex-1 bg-white border-t border-b border-r border-gray-200 rounded-r-md"
+          class="flex items-center justify-between flex-1 bg-white border border-gray-200 rounded-md sm:border-l-0 sm:rounded-l-none"
         >
           <ul class="flex flex-col flex-1 px-4 py-2 break-all">
             <li class="flex flex-col">
@@ -87,14 +152,16 @@ export default {
   middleware: "auth",
   async fetch() {
     await this.loadMessages();
+    this.statistics = await this.getStatistics();
   },
   data() {
     return {
       sentMessages: [],
       totalSentMessages: 0,
       currentPage: 0,
-      pageSize: 1,
+      pageSize: 10,
       isInitialLoadComplete: false,
+      statistics: null,
     };
   },
   computed: {
@@ -108,7 +175,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("messages", ["getAllSentMessages"]),
+    ...mapActions("messages", ["getAllSentMessages", "getStatistics"]),
     async loadMessages() {
       const response = await this.getAllSentMessages({
         page: this.currentPage,

@@ -11,5 +11,6 @@ export const API = {
   },
   messages: {
     root: baseUrl + "/messages",
+    statistics: baseUrl + "/messages/statistics",
   },
 };

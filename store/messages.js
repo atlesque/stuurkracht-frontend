@@ -6,6 +6,8 @@ const types = {
   SET_LAST_SENT_MESSAGE: "✅ Set last sent message",
   START_LOADING_ALL_SENT_MESSAGES: "⏱ [Start] loading all sent messages",
   STOP_LOADING_ALL_SENT_MESSAGES: "⏱ [Stop] loading all sent messages",
+  START_LOADING_STATISTICS: "⏱ [Start] loading statistics",
+  STOP_LOADING_STATISTICS: "⏱ [Stop] loading statistics",
   /* 
     Error handling
   */
@@ -15,6 +17,7 @@ const types = {
 export const state = () => ({
   isSendingMessage: false,
   isLoadingAllSentMessages: false,
+  isLoadingStatistics: false,
   lastSentMessage: null,
   error: null,
 });
@@ -34,6 +37,12 @@ export const mutations = {
   },
   [types.STOP_LOADING_ALL_SENT_MESSAGES](state) {
     state.isLoadingAllSentMessages = false;
+  },
+  [types.START_LOADING_STATISTICS](state) {
+    state.isLoadingStatistics = true;
+  },
+  [types.STOP_LOADING_STATISTICS](state) {
+    state.isLoadingStatistics = false;
   },
   /* 
     Error handling
@@ -125,5 +134,23 @@ export const actions = {
       commit(types.STOP_LOADING_ALL_SENT_MESSAGES);
     }
     return allSentMessages;
+  },
+  async getStatistics({ commit }) {
+    commit(types.CLEAR_ERROR);
+    commit(types.START_LOADING_STATISTICS);
+    let statistics;
+    try {
+      const response = await this.$axios.get(API.messages.statistics);
+      statistics = response.data;
+    } catch (err) {
+      console.error(err);
+      commit(
+        types.SET_ERROR,
+        "Fout bij ophalen van statistieken. Probeer het later opnieuw."
+      );
+    } finally {
+      commit(types.STOP_LOADING_STATISTICS);
+    }
+    return statistics;
   },
 };
