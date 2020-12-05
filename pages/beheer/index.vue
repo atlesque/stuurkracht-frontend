@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <main class="p-10">
+    <main class="flex flex-col items-center max-w-6xl p-10 mx-auto">
       <transition name="fade">
         <span v-if="isAuthenticating === true" class="text-xl text-theme-gray"
           >Bezig met inloggen...</span

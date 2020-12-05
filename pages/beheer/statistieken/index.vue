@@ -1,5 +1,5 @@
 <template>
-  <main class="max-w-6xl p-10">
+  <main class="max-w-6xl p-10 mx-auto">
     <h1>Statistieken</h1>
     <dl
       v-if="statistics != null"
@@ -73,7 +73,7 @@
         class="flex flex-col col-span-1 rounded-md shadow-sm sm:flex-row"
       >
         <div
-          class="flex items-center justify-center flex-shrink-0 w-32 mx-auto overflow-hidden text-sm font-medium rounded-t-md sm:mx-0 sm:rounded-r-none bg-theme-blue"
+          class="flex items-center justify-center flex-shrink-0 w-32 mx-auto overflow-hidden text-sm font-medium rounded-t-md sm:mx-0 sm:rounded-tr-none sm:rounded-bl-md bg-theme-blue"
         >
           <img :src="message.card.picture" class="object-cover w-full h-full" />
         </div>

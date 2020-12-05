@@ -1,5 +1,5 @@
 <template>
-  <main class="p-10">
+  <main class="max-w-6xl p-10 mx-auto">
     <div
       v-if="isCardUploadSuccess === false && isAddingNewCard === false"
       class="flex flex-col md:flex-row"

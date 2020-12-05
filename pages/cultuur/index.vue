@@ -1,8 +1,8 @@
 <template>
-  <main>
-    <div class="flex flex-col md:flex-row">
-      <div class="flex-1 bg-candles min-h-50vh md:min-h-0"></div>
-      <div class="flex-1 p-10 md:py-0">
+  <main class="max-w-6xl p-10 mx-auto">
+    <div class="flex flex-col mb-10 lg:flex-row">
+      <div class="flex-1 mb-10 lg:mb-0 bg-candles min-h-50vh lg:min-h-0"></div>
+      <div class="flex-1 lg:px-10">
         <h1 class="mt-0">Cultuur</h1>
         <p>
           Verlies is eigen aan het leven en heeft veel betekenissen zoals
@@ -23,7 +23,7 @@
         >
       </div>
     </div>
-    <div class="p-10">
+    <div class="">
       <h1>Contact</h1>
       <p>Dit initiatief werd bedacht door Francky Debusschere.</p>
       <p>

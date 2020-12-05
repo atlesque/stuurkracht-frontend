@@ -1,5 +1,5 @@
 <template>
-  <main class="p-10">
+  <main class="max-w-6xl p-10 mx-auto">
     <span v-show="isLoadingCardDetails === true" class="text-xl text-theme-gray"
       >Kaart wordt geladen...</span
     >

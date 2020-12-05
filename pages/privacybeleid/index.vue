@@ -38,7 +38,7 @@
     </p>
     <h2>Contact opnemen</h2>
     <p>
-      Indien je misbruikt wilt melden of jouw gegevens wenst te wissen uit onze
+      Indien je misbruik wilt melden of jouw gegevens wenst te wissen uit onze
       databank, gelieve een mail te sturen naar de beheerder, Alexander Van
       Maele (alexander@atlesque.com).
     </p>

@@ -17,23 +17,35 @@
     <span v-if="error != null && error.length > 0" class="text-xl text-red-900">
       {{ error }}
     </span>
-    <ul
-      class="grid grid-flow-row grid-cols-2 gap-10 cards-list md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
-    >
-      <li
-        v-for="card in availableCards"
-        :key="card.id"
-        class="relative overflow-hidden transition-all duration-200 card"
+    <template v-if="availableCards.length > 0 && isLoadingCards === false">
+      <ul
+        class="grid grid-flow-row grid-cols-2 gap-10 mb-10 cards-list md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
       >
-        <NuxtLink :to="`/kaart/${card.id}`">
-          <img
-            :src="card.picture"
-            :alt="card.name"
-            class="absolute inset-0 object-cover w-full h-full"
-          />
-        </NuxtLink>
-      </li>
-    </ul>
+        <li
+          v-for="card in availableCards"
+          :key="card.id"
+          class="relative overflow-hidden transition-all duration-200 card"
+        >
+          <NuxtLink :to="`/kaart/${card.id}`">
+            <img
+              :src="card.picture"
+              :alt="card.name"
+              class="absolute inset-0 object-cover w-full h-full"
+            />
+          </NuxtLink>
+        </li>
+      </ul>
+      <p>
+        Ben je zelf creatief? Is er een kaart die jij graag zou willen delen met
+        anderen?<br />Stuur ons een mailtje op
+        <a
+          class="underline"
+          href="mailto:alexander@atlesque.com?subject=Kaart voor Stuurkracht"
+          >alexander@atlesque.com</a
+        >
+        met jouw kaart!
+      </p>
+    </template>
   </main>
 </template>
 
