@@ -143,7 +143,7 @@
               </span>
             </div>
             <div
-              class="flex flex-col col-span-2"
+              class="flex flex-col lg:col-span-2"
               :class="{ 'form-group--error': $v.message.body.$error }"
             >
               <label for="body" class="label">Boodschap</label>
@@ -169,10 +169,10 @@
               </span>
             </div>
           </div>
-          <div class="flex justify-between">
+          <div class="flex flex-col justify-between lg:flex-row">
             <button
               v-show="isRecaptchaVisible === false"
-              class="button-primary"
+              class="mb-4 button-primary lg:mb-0"
               type="button"
               @click="handleSubmitClick"
             >
@@ -181,6 +181,7 @@
             <RecaptchaButton
               v-show="isRecaptchaVisible === true"
               :only-show-captcha="true"
+              class="mx-auto mb-4 lg:mb-0"
               @response="handleSubmitForm"
               >Stuur deze kaart</RecaptchaButton
             >
@@ -219,6 +220,7 @@
             <RecaptchaButton
               v-show="isRecaptchaVisible === true"
               :only-show-captcha="true"
+              class="mx-auto mb-4 lg:mb-0"
               @response="handleSubmitForm"
               >Stuur deze kaart</RecaptchaButton
             >

@@ -14,7 +14,7 @@
       key="recaptchaVerification"
     >
       <vue-recaptcha
-        class="h-0 transition-opacity duration-200"
+        class="transition-opacity duration-200"
         :class="[{ 'opacity-0': isRecaptchaLoaded === false }]"
         :sitekey="recaptchaKey"
         :load-recaptcha-script="true"
