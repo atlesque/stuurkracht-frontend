@@ -32,7 +32,6 @@
             />
           </div>
         </div>
-        <!-- <button type="submit" class="button-primary">Inloggen</button> -->
         <RecaptchaButton @response="handleLogin">Inloggen</RecaptchaButton>
       </form>
 
@@ -111,8 +110,18 @@ export default {
             recaptchaResponse,
           },
         });
+        if (response.status === 201) {
+          this.$gtag.event(`logged_in_${this.username}`, {
+            event_category: "users",
+          });
+        } else {
+          this.$gtag.event(`failed_login`, {
+            event_category: "users",
+            event_label: "failed_login",
+            value: `username: ${this.username}`,
+          });
+        }
         this.isRedirecting = true;
-        console.log(response);
       } catch (err) {
         console.log(err);
         this.error = "Fout tijdens het inloggen. Controleer je gegevens.";

@@ -301,6 +301,9 @@ export default {
           recaptchaResponse,
         });
         if (this.isSendingMessage === false && this.error == null) {
+          this.$gtag.event(`send_card_${this.cardId}`, {
+            event_category: "messages",
+          });
           this.$router.push("/kaart-verstuurd");
         }
       }

@@ -16,6 +16,7 @@
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/date-fns": "^1.4.3",
+    "@nuxtjs/google-gtag": "^1.0.4",
     "core-js": "^3.6.5",
     "jwt-decode": "^3.1.2",
     "less": "^3.12.2",

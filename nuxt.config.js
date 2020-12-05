@@ -53,6 +53,14 @@ export default {
     "@nuxt/content",
     // https://auth.nuxtjs.org
     "@nuxtjs/auth",
+    // https://github.com/nuxt-community/google-gtag-module
+    [
+      "@nuxtjs/google-gtag",
+      {
+        id: process.env.NUXT_ENV_GOOGLE_ANALYTICS_KEY,
+        // debug: true, // Enable to track in dev mode
+      },
+    ],
   ],
 
   // Auth module configuration (https://go.nuxtjs.dev/content)
