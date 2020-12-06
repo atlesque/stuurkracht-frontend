@@ -15,10 +15,10 @@
       </p>
       <template v-if="lastSentMessage != null">
         <p>Je kan de kaart ook delen of zelf bekijken via deze link:</p>
-        <div class="flex mb-10">
+        <div class="flex flex-col mb-10 sm:flex-row">
           <input
             type="text"
-            class="flex-1 mr-4 text-sm input"
+            class="flex-1 mb-4 text-sm sm:mr-4 input sm:mb-0"
             readonly
             :value="messageUrl"
           />
@@ -28,7 +28,7 @@
         </div>
         <NuxtLink
           :to="`/boodschap/${lastSentMessage.id}`"
-          class="button-primary"
+          class="w-full button-primary md:w-auto"
           >Bekijk je kaart</NuxtLink
         >
       </template>

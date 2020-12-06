@@ -197,10 +197,12 @@
           v-show="isPreviewVisible === true"
           class="flex flex-col justify-between flex-1 md:pl-10"
         >
-          <span class="mt-0 font-bold uppercase text text-theme-blue-light">
+          <span
+            class="mt-0 mb-4 font-bold uppercase text text-theme-blue-light lg:mb-0"
+          >
             Zo zal jouw boodschap eruit zien:
           </span>
-          <h1 class="mt-0">
+          <h1 class="mt-0 mb-8 lg:mb-0">
             <span>{{ message.senderName }} heeft je kracht gestuurd</span>
           </h1>
           <pre
@@ -208,10 +210,10 @@
             class="p-10 mb-10 shadow-md bg-theme-letter font-handwritten"
             >{{ message.body }}</pre
           >
-          <div class="flex justify-between">
+          <div class="flex flex-col justify-between lg:flex-row">
             <button
               v-show="isRecaptchaVisible === false"
-              class="button-primary"
+              class="mb-4 button-primary lg:mb-0"
               type="button"
               @click="handleSubmitClick"
             >
