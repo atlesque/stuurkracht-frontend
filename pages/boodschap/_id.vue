@@ -24,7 +24,7 @@
         </h1>
         <pre
           v-if="message.body.length > 0"
-          class="flex-1 p-10 mb-10 shadow-md bg-theme-letter font-handwritten"
+          class="flex-1 p-10 mb-10 whitespace-pre-wrap shadow-md bg-theme-letter font-handwritten"
           >{{ message.body }}</pre
         >
         <div>
