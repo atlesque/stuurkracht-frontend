@@ -156,6 +156,12 @@ export default {
         },
       },
     },
+    redirect: {
+      login: "/beheer",
+      logout: "/",
+      callback: "/beheer",
+      home: "/",
+    },
   },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
