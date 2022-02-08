@@ -117,30 +117,48 @@
             >
               <label for="recipientEmail" class="label"
                 >E-mailadres bestemmeling
-                <span class="text-red-500">*</span></label
+                <span
+                  v-if="message.sendWithoutEmail === false"
+                  class="text-red-500"
+                  >*</span
+                ></label
               >
-              <input
-                id="recipientEmail"
-                v-model.trim="$v.message.recipientEmail.$model"
-                type="text"
-                class="input"
-                name="recipientEmail"
-                maxlength="320"
-              />
-              <span
-                v-if="!$v.message.recipientEmail.required"
-                class="form-error"
-                >Dit veld is vereist</span
-              >
-              <span
-                v-if="!$v.message.recipientEmail.maxLength"
-                class="form-error"
-                >Max.
-                {{ $v.message.recipientEmail.$params.maxLength.max }} karakters
-              </span>
-              <span v-if="!$v.message.recipientEmail.email" class="form-error"
-                >Voer een geldig emailadres in
-              </span>
+              <div class="mb-2 w-full">
+                <input
+                  id="recipientEmail"
+                  v-model.trim="$v.message.recipientEmail.$model"
+                  type="text"
+                  class="input w-full"
+                  name="recipientEmail"
+                  maxlength="320"
+                  :disabled="message.sendWithoutEmail === true"
+                />
+                <span
+                  v-if="!$v.message.recipientEmail.required"
+                  class="form-error"
+                  >Dit veld is vereist</span
+                >
+                <span
+                  v-if="!$v.message.recipientEmail.maxLength"
+                  class="form-error"
+                  >Max.
+                  {{ $v.message.recipientEmail.$params.maxLength.max }}
+                  karakters
+                </span>
+                <span v-if="!$v.message.recipientEmail.email" class="form-error"
+                  >Voer een geldig emailadres in
+                </span>
+              </div>
+              <div class="flex items-center">
+                <input
+                  id="sendWithoutEmail"
+                  v-model="message.sendWithoutEmail"
+                  type="checkbox"
+                  name="sendWithoutEmail"
+                  class="mr-2"
+                />
+                <label for="sendWithoutEmail">Ik ken het adres niet</label>
+              </div>
             </div>
             <div
               class="flex flex-col lg:col-span-2"
@@ -268,7 +286,12 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import { required, maxLength, email } from "vuelidate/lib/validators";
+import {
+  required,
+  maxLength,
+  email,
+  requiredIf,
+} from "vuelidate/lib/validators";
 import AutoSizingTextarea from "@/components/AutoSizingTextarea.vue";
 import RecaptchaButton from "@/components/RecaptchaButton.vue";
 
@@ -301,6 +324,7 @@ export default {
         recipientName: "",
         recipientEmail: "",
         body: "",
+        sendWithoutEmail: false,
       },
     };
   },
@@ -358,7 +382,9 @@ export default {
         maxLength: maxLength(100),
       },
       recipientEmail: {
-        required,
+        required: requiredIf((data) => {
+          return data.sendWithoutEmail === false;
+        }),
         email,
         maxLength: maxLength(320),
       },

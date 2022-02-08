@@ -7,14 +7,27 @@
       />
     </div>
     <div class="flex-1 p-10">
-      <h1 class="mt-0 mb-10 uppercase">Je kaart is onderweg!</h1>
-      <p>Je bestemmeling ontvangt binnenkort je kaart via mail.</p>
-      <p>
-        Indien het binnen een uur nog niet toegekomen is, verzoek je
-        bestemmeling dan even hun spamfolder te bekijken.
-      </p>
+      <h1 class="mt-0 mb-10 uppercase">
+        <template v-if="isLastCardSentViaEmail === true"
+          >Je kaart is onderweg!</template
+        >
+        <template v-else>Deel je kaart via een link</template>
+      </h1>
+      <template v-if="isLastCardSentViaEmail === true">
+        <p>Je bestemmeling ontvangt binnenkort je kaart via mail.</p>
+        <p>
+          Indien het binnen een uur nog niet toegekomen is, verzoek je
+          bestemmeling dan even hun spamfolder te bekijken.
+        </p>
+      </template>
+      <template v-else>
+        <p>Kopieer onderstaande link en stuur deze naar je bestemmeling.</p>
+        <p>Zij kunnen zo jouw kaart bekijken.</p>
+      </template>
       <template v-if="lastSentMessage != null">
-        <p>Je kan de kaart ook delen of zelf bekijken via deze link:</p>
+        <p v-if="isLastCardSentViaEmail === true">
+          Je kan de kaart ook delen of zelf bekijken via deze link:
+        </p>
         <div class="flex flex-col mb-10 sm:flex-row">
           <input
             type="text"
@@ -45,6 +58,9 @@ export default {
       return `${
         process.client ? window.location.origin : "https://stuurkracht.be"
       }/boodschap/${this.lastSentMessage.id}`;
+    },
+    isLastCardSentViaEmail() {
+      return (this.lastSentMessage.recipientEmail || "").length > 0;
     },
   },
   methods: {
